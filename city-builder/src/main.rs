@@ -1,5 +1,7 @@
 extern crate piston_window;
 
+mod tile;
+
 use piston_window::{
     PistonWindow,
     WindowSettings,
@@ -13,6 +15,8 @@ use piston_window::{
     clear,
     image,
 };
+
+use tile::Tile;
 
 fn main() {
 
@@ -44,6 +48,12 @@ fn main() {
 
     let mut origin_horizontal_position: f64 = 0.0;
     let mut origin_vertical_position: f64 = 0.0;
+
+    const TILES_AMOUNT: usize = 625;
+    let tiles: [Tile; TILES_AMOUNT] = [
+        Tile::new();
+        TILES_AMOUNT
+    ];
 
     while let Some(event) = window.next() {
 
@@ -80,23 +90,39 @@ fn main() {
                     window,
                 );
 
-                image(
-                    &default_ground,
-                    context.transform.trans(
-                        TILE_HORIZONTAL_OFFSET + origin_horizontal_position,
-                        TILE_VERTICAL_OFFSET + origin_vertical_position,
-                    ),
-                    window,
-                );
+                let mut column: usize = 0;
+                let mut line: usize = 0;
 
-                image(
-                    &default_ground,
-                    context.transform.trans(
-                        TILE_HORIZONTAL_OFFSET + 47.5 + origin_horizontal_position,
-                        TILE_VERTICAL_OFFSET - 34.0 + origin_vertical_position,
-                    ),
-                    window,
-                );
+                for (index, _) in tiles.iter().enumerate() {
+
+                    const TILES_PER_LINE: usize = 25;
+
+                    if index != 0 &&
+                        index % TILES_PER_LINE == 0 {
+                        column = 0;
+                        line += 1;
+                    }
+
+                    const TILE_HORIZONTAL_DISTANCE: f64 = 47.5;
+                    const TILE_VERTICAL_DISTANCE: f64 = 34.0;
+
+                    image(
+                        &default_ground,
+                        context.transform.trans(
+                            TILE_HORIZONTAL_OFFSET +
+                            TILE_HORIZONTAL_DISTANCE * (column as f64) +
+                            TILE_HORIZONTAL_DISTANCE * (line as f64) +
+                            origin_horizontal_position,
+                            TILE_VERTICAL_OFFSET -
+                            TILE_VERTICAL_DISTANCE * (column as f64) +
+                            TILE_VERTICAL_DISTANCE * (line as f64) +
+                            origin_vertical_position,
+                        ),
+                        window,
+                    );
+
+                    column += 1;
+                }
             }
         );
     }
