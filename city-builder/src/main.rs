@@ -40,16 +40,22 @@ fn main() {
         "res/images/sun.png",
         Flip::None,
         &TextureSettings::new(),
-    )
-        .unwrap();
+    ).unwrap();
 
-    let default_ground = Texture::from_path(
-        &mut window.create_texture_context(),
-        "res/images/ground_default.png",
-        Flip::None,
-        &TextureSettings::new(),
-    )
-        .unwrap();
+    let all_tiles = [
+        Texture::from_path(
+            &mut window.create_texture_context(),
+            "res/images/ground_default.png",
+            Flip::None,
+            &TextureSettings::new(),
+        ).unwrap(),
+        Texture::from_path(
+            &mut window.create_texture_context(),
+            "res/images/ground_road_1.png",
+            Flip::None,
+            &TextureSettings::new(),
+        ).unwrap()
+    ];
 
     const TILE_HORIZONTAL_OFFSET: f64 = -75.0;
     const TILE_VERTICAL_OFFSET: f64 = -25.0;
@@ -58,7 +64,7 @@ fn main() {
     let mut origin_vertical_position: f64 = 0.0;
 
     const TILES_AMOUNT: usize = 625;
-    let tiles: [Tile; TILES_AMOUNT] = [
+    let mut tiles: [Tile; TILES_AMOUNT] = [
         Tile::new();
         TILES_AMOUNT
     ];
@@ -115,7 +121,7 @@ fn main() {
                 let mut column: usize = 0;
                 let mut line: usize = 0;
 
-                for (index, _) in tiles.iter().enumerate() {
+                for (index, tile) in tiles.iter().enumerate() {
 
                     const TILES_PER_LINE: usize = 25;
 
@@ -129,7 +135,7 @@ fn main() {
                     const TILE_VERTICAL_DISTANCE: f64 = 34.0;
 
                     image(
-                        &default_ground,
+                        &all_tiles[tile.get_sprite()],
                         context.transform.trans(
                             TILE_HORIZONTAL_OFFSET +
                             TILE_HORIZONTAL_DISTANCE * (column as f64) +
