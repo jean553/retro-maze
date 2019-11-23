@@ -35,6 +35,14 @@ fn main() {
         .build()
         .unwrap();
 
+    let sun = Texture::from_path(
+        &mut window.create_texture_context(),
+        "res/images/sun.png",
+        Flip::None,
+        &TextureSettings::new(),
+    )
+        .unwrap();
+
     let default_ground = Texture::from_path(
         &mut window.create_texture_context(),
         "res/images/ground_default.png",
@@ -87,6 +95,20 @@ fn main() {
 
                 clear(
                     BLACK_COLOR,
+                    window,
+                );
+
+                const SUN_RELATIVE_HORIZONTAL_POSITION: f64 = 50.0;
+                const SUN_RELATIVE_VERTICAL_POSITION: f64 = -800.0;
+
+                image(
+                    &sun,
+                    context.transform.trans(
+                        SUN_RELATIVE_HORIZONTAL_POSITION +
+                        origin_horizontal_position,
+                        SUN_RELATIVE_VERTICAL_POSITION +
+                        origin_vertical_position,
+                    ),
                     window,
                 );
 
