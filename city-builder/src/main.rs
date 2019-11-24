@@ -113,15 +113,15 @@ fn main() {
             &event,
             |context, window, _| {
 
-                const BLACK_COLOR: [f32; 4] = [
+                const BACKGROUND_COLOR: [f32; 4] = [
+                    0.06,
                     0.0,
-                    0.0,
-                    0.0,
+                    0.1,
                     0.0,
                 ];
 
                 clear(
-                    BLACK_COLOR,
+                    BACKGROUND_COLOR,
                     window,
                 );
 
