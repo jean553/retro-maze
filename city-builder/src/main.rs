@@ -128,16 +128,27 @@ fn main() {
                 const SUN_RELATIVE_HORIZONTAL_POSITION: f64 = 50.0;
                 const SUN_RELATIVE_VERTICAL_POSITION: f64 = -800.0;
 
-                image(
-                    &sun,
-                    context.transform.trans(
-                        SUN_RELATIVE_HORIZONTAL_POSITION +
-                        origin_horizontal_position,
-                        SUN_RELATIVE_VERTICAL_POSITION +
-                        origin_vertical_position,
-                    ),
-                    window,
-                );
+                let sun_horizontal_position = SUN_RELATIVE_HORIZONTAL_POSITION +
+                    origin_horizontal_position;
+                let sun_vertical_position = SUN_RELATIVE_VERTICAL_POSITION +
+                    origin_vertical_position;
+
+                if sun_horizontal_position > -1000.0 &&
+                    sun_horizontal_position < WINDOW_WIDTH &&
+                    sun_vertical_position > -500.0 &&
+                    sun_vertical_position < WINDOW_HEIGHT {
+
+                    image(
+                        &sun,
+                        context.transform.trans(
+                            SUN_RELATIVE_HORIZONTAL_POSITION +
+                            origin_horizontal_position,
+                            SUN_RELATIVE_VERTICAL_POSITION +
+                            origin_vertical_position,
+                        ),
+                        window,
+                    );
+                }
 
                 let mut column: usize = 0;
                 let mut line: usize = 0;
@@ -152,20 +163,38 @@ fn main() {
                         line += 1;
                     }
 
+                    const TILE_WIDTH: f64 = 250.0;
+                    const TILE_HEIGHT: f64 = 150.0;
                     const TILE_HORIZONTAL_DISTANCE: f64 = 47.5;
                     const TILE_VERTICAL_DISTANCE: f64 = 34.0;
+
+                    let tile_horizontal_position = TILE_HORIZONTAL_OFFSET +
+                        TILE_HORIZONTAL_DISTANCE * (column as f64) +
+                        TILE_HORIZONTAL_DISTANCE * (line as f64) +
+                        origin_horizontal_position;
+
+                    if tile_horizontal_position < -TILE_WIDTH ||
+                        tile_horizontal_position > WINDOW_WIDTH {
+                        column += 1;
+                        continue;
+                    }
+
+                    let tile_vertical_position = TILE_VERTICAL_OFFSET -
+                        TILE_VERTICAL_DISTANCE * (column as f64) +
+                        TILE_VERTICAL_DISTANCE * (line as f64) +
+                        origin_vertical_position;
+
+                    if tile_vertical_position < -TILE_HEIGHT ||
+                        tile_vertical_position > WINDOW_HEIGHT {
+                        column += 1;
+                        continue;
+                    }
 
                     image(
                         &all_tiles[tile.get_sprite()],
                         context.transform.trans(
-                            TILE_HORIZONTAL_OFFSET +
-                            TILE_HORIZONTAL_DISTANCE * (column as f64) +
-                            TILE_HORIZONTAL_DISTANCE * (line as f64) +
-                            origin_horizontal_position,
-                            TILE_VERTICAL_OFFSET -
-                            TILE_VERTICAL_DISTANCE * (column as f64) +
-                            TILE_VERTICAL_DISTANCE * (line as f64) +
-                            origin_vertical_position,
+                            tile_horizontal_position,
+                            tile_vertical_position
                         ),
                         window,
                     );
