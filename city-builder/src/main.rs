@@ -77,8 +77,8 @@ fn main() {
 
         let pressed_key = event.press_args();
 
-        const CAMERA_MOVEMENT_OFFSET: f64 = 10.0;
-        const CAMERA_MOVEMENT_INTERVAL: u128 = 50;
+        const CAMERA_MOVEMENT_OFFSET: f64 = 5.0;
+        const CAMERA_MOVEMENT_INTERVAL: u128 = 25;
 
         if let Some(Button::Keyboard(Key::Up)) = pressed_key {
             if time::Instant::now().duration_since(previous_time).as_millis() >
