@@ -47,25 +47,25 @@ fn main() {
     let all_tiles = [
         Texture::from_path(
             &mut window.create_texture_context(),
-            "res/images/ground_default.png",
+            "res/images/default.png",
             Flip::None,
             &TextureSettings::new(),
         ).unwrap(),
         Texture::from_path(
             &mut window.create_texture_context(),
-            "res/images/arrival.png",
+            "res/images/arrival_0.png",
             Flip::None,
             &TextureSettings::new(),
         ).unwrap(),
         Texture::from_path(
             &mut window.create_texture_context(),
-            "res/images/arrival_off.png",
+            "res/images/arrival_1.png",
             Flip::None,
             &TextureSettings::new(),
         ).unwrap(),
         Texture::from_path(
             &mut window.create_texture_context(),
-            "res/images/ground_road_1.png",
+            "res/images/road.png",
             Flip::None,
             &TextureSettings::new(),
         ).unwrap()
