@@ -53,6 +53,18 @@ fn main() {
         ).unwrap(),
         Texture::from_path(
             &mut window.create_texture_context(),
+            "res/images/arrival.png",
+            Flip::None,
+            &TextureSettings::new(),
+        ).unwrap(),
+        Texture::from_path(
+            &mut window.create_texture_context(),
+            "res/images/arrival_off.png",
+            Flip::None,
+            &TextureSettings::new(),
+        ).unwrap(),
+        Texture::from_path(
+            &mut window.create_texture_context(),
             "res/images/ground_road_1.png",
             Flip::None,
             &TextureSettings::new(),
@@ -65,15 +77,35 @@ fn main() {
     let mut origin_horizontal_position: f64 = 0.0;
     let mut origin_vertical_position: f64 = 0.0;
 
-    const TILES_AMOUNT: usize = 625;
-    let tiles: [Tile; TILES_AMOUNT] = [
+    const TILES_AMOUNT: usize = 330;
+    let mut tiles: [Tile; TILES_AMOUNT] = [
         Tile::new();
         TILES_AMOUNT
     ];
 
-    let mut previous_time = time::Instant::now();
+    const ARRIVAL_TILE_INDEX: usize = 5;
+    const FIRST_ARRIVAL_SPRITE_INDEX: usize = 1;
+    const SECOND_ARRIVAL_SPRITE_INDEX: usize = 2;
+    tiles[ARRIVAL_TILE_INDEX].set_sprite(FIRST_ARRIVAL_SPRITE_INDEX);
+
+    let mut event_previous_time = time::Instant::now();
+    let mut animations_previous_time = time::Instant::now();
 
     while let Some(event) = window.next() {
+
+        const ANIMATION_INTERVAL: u128 = 100;
+        if time::Instant::now().duration_since(animations_previous_time).as_millis() >
+            ANIMATION_INTERVAL {
+
+            let arrival_sprite = &mut tiles[ARRIVAL_TILE_INDEX];
+            if arrival_sprite.get_sprite() == FIRST_ARRIVAL_SPRITE_INDEX {
+                arrival_sprite.set_sprite(SECOND_ARRIVAL_SPRITE_INDEX);
+            } else {
+                arrival_sprite.set_sprite(FIRST_ARRIVAL_SPRITE_INDEX);
+            }
+
+            animations_previous_time = time::Instant::now();
+        }
 
         let pressed_key = event.press_args();
 
@@ -81,31 +113,31 @@ fn main() {
         const CAMERA_MOVEMENT_INTERVAL: u128 = 25;
 
         if let Some(Button::Keyboard(Key::Up)) = pressed_key {
-            if time::Instant::now().duration_since(previous_time).as_millis() >
+            if time::Instant::now().duration_since(event_previous_time).as_millis() >
                 CAMERA_MOVEMENT_INTERVAL {
                 origin_vertical_position += CAMERA_MOVEMENT_OFFSET;
-                previous_time = time::Instant::now();
+                event_previous_time = time::Instant::now();
             }
         }
         else if let Some(Button::Keyboard(Key::Down)) = pressed_key {
-            if time::Instant::now().duration_since(previous_time).as_millis() >
+            if time::Instant::now().duration_since(event_previous_time).as_millis() >
                 CAMERA_MOVEMENT_INTERVAL {
                 origin_vertical_position -= CAMERA_MOVEMENT_OFFSET;
-                previous_time = time::Instant::now();
+                event_previous_time = time::Instant::now();
             }
         }
         else if let Some(Button::Keyboard(Key::Left)) = pressed_key {
-            if time::Instant::now().duration_since(previous_time).as_millis() >
+            if time::Instant::now().duration_since(event_previous_time).as_millis() >
                 CAMERA_MOVEMENT_INTERVAL {
                 origin_horizontal_position += CAMERA_MOVEMENT_OFFSET;
-                previous_time = time::Instant::now();
+                event_previous_time = time::Instant::now();
             }
         }
         else if let Some(Button::Keyboard(Key::Right)) = pressed_key {
-            if time::Instant::now().duration_since(previous_time).as_millis() >
+            if time::Instant::now().duration_since(event_previous_time).as_millis() >
                 CAMERA_MOVEMENT_INTERVAL {
                 origin_horizontal_position -= CAMERA_MOVEMENT_OFFSET;
-                previous_time = time::Instant::now();
+                event_previous_time = time::Instant::now();
             }
         }
 
@@ -125,8 +157,8 @@ fn main() {
                     window,
                 );
 
-                const SUN_RELATIVE_HORIZONTAL_POSITION: f64 = 50.0;
-                const SUN_RELATIVE_VERTICAL_POSITION: f64 = -800.0;
+                const SUN_RELATIVE_HORIZONTAL_POSITION: f64 = -730.0;
+                const SUN_RELATIVE_VERTICAL_POSITION: f64 = -260.0;
 
                 let sun_horizontal_position = SUN_RELATIVE_HORIZONTAL_POSITION +
                     origin_horizontal_position;
@@ -158,7 +190,7 @@ fn main() {
 
                 for (index, tile) in tiles.iter().enumerate() {
 
-                    const TILES_PER_LINE: usize = 25;
+                    const TILES_PER_LINE: usize = 11;
 
                     if index != 0 &&
                         index % TILES_PER_LINE == 0 {
@@ -171,7 +203,7 @@ fn main() {
                     const TILE_HORIZONTAL_DISTANCE: f64 = 47.5;
                     const TILE_VERTICAL_DISTANCE: f64 = 34.0;
 
-                    let tile_horizontal_position = TILE_HORIZONTAL_OFFSET +
+                    let tile_horizontal_position = TILE_HORIZONTAL_OFFSET -
                         TILE_HORIZONTAL_DISTANCE * (column as f64) +
                         TILE_HORIZONTAL_DISTANCE * (line as f64) +
                         origin_horizontal_position;
@@ -182,7 +214,7 @@ fn main() {
                         continue;
                     }
 
-                    let tile_vertical_position = TILE_VERTICAL_OFFSET -
+                    let tile_vertical_position = TILE_VERTICAL_OFFSET +
                         TILE_VERTICAL_DISTANCE * (column as f64) +
                         TILE_VERTICAL_DISTANCE * (line as f64) +
                         origin_vertical_position;
