@@ -133,9 +133,12 @@ fn main() {
                 let sun_vertical_position = SUN_RELATIVE_VERTICAL_POSITION +
                     origin_vertical_position;
 
-                if sun_horizontal_position > -1000.0 &&
+                const SUN_WIDTH: f64 = 1000.0;
+                const SUN_HEIGHT: f64 = 500.0;
+
+                if sun_horizontal_position > -SUN_WIDTH &&
                     sun_horizontal_position < WINDOW_WIDTH &&
-                    sun_vertical_position > -500.0 &&
+                    sun_vertical_position > -SUN_HEIGHT &&
                     sun_vertical_position < WINDOW_HEIGHT {
 
                     image(
