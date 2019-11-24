@@ -2,6 +2,8 @@ extern crate piston_window;
 
 mod tile;
 
+use std::time;
+
 use piston_window::{
     PistonWindow,
     WindowSettings,
@@ -64,28 +66,47 @@ fn main() {
     let mut origin_vertical_position: f64 = 0.0;
 
     const TILES_AMOUNT: usize = 625;
-    let mut tiles: [Tile; TILES_AMOUNT] = [
+    let tiles: [Tile; TILES_AMOUNT] = [
         Tile::new();
         TILES_AMOUNT
     ];
+
+    let mut previous_time = time::Instant::now();
 
     while let Some(event) = window.next() {
 
         let pressed_key = event.press_args();
 
-        const CAMERA_MOVEMENT_OFFSET: f64 = 5.0;
+        const CAMERA_MOVEMENT_OFFSET: f64 = 25.0;
+        const CAMERA_MOVEMENT_INTERVAL: u128 = 100;
 
         if let Some(Button::Keyboard(Key::Up)) = pressed_key {
-            origin_vertical_position += CAMERA_MOVEMENT_OFFSET;
+            if time::Instant::now().duration_since(previous_time).as_millis() >
+                CAMERA_MOVEMENT_INTERVAL {
+                origin_vertical_position += CAMERA_MOVEMENT_OFFSET;
+                previous_time = time::Instant::now();
+            }
         }
         else if let Some(Button::Keyboard(Key::Down)) = pressed_key {
-            origin_vertical_position -= CAMERA_MOVEMENT_OFFSET;
+            if time::Instant::now().duration_since(previous_time).as_millis() >
+                CAMERA_MOVEMENT_INTERVAL {
+                origin_vertical_position -= CAMERA_MOVEMENT_OFFSET;
+                previous_time = time::Instant::now();
+            }
         }
         else if let Some(Button::Keyboard(Key::Left)) = pressed_key {
-            origin_horizontal_position += CAMERA_MOVEMENT_OFFSET;
+            if time::Instant::now().duration_since(previous_time).as_millis() >
+                CAMERA_MOVEMENT_INTERVAL {
+                origin_horizontal_position += CAMERA_MOVEMENT_OFFSET;
+                previous_time = time::Instant::now();
+            }
         }
         else if let Some(Button::Keyboard(Key::Right)) = pressed_key {
-            origin_horizontal_position -= CAMERA_MOVEMENT_OFFSET;
+            if time::Instant::now().duration_since(previous_time).as_millis() >
+                CAMERA_MOVEMENT_INTERVAL {
+                origin_horizontal_position -= CAMERA_MOVEMENT_OFFSET;
+                previous_time = time::Instant::now();
+            }
         }
 
         window.draw_2d(
