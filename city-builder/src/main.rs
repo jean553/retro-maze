@@ -53,6 +53,12 @@ fn main() {
         ).unwrap(),
         Texture::from_path(
             &mut window.create_texture_context(),
+            "res/images/arrival.png",
+            Flip::None,
+            &TextureSettings::new(),
+        ).unwrap(),
+        Texture::from_path(
+            &mut window.create_texture_context(),
             "res/images/ground_road_1.png",
             Flip::None,
             &TextureSettings::new(),
@@ -65,11 +71,14 @@ fn main() {
     let mut origin_horizontal_position: f64 = 0.0;
     let mut origin_vertical_position: f64 = 0.0;
 
-    const TILES_AMOUNT: usize = 625;
-    let tiles: [Tile; TILES_AMOUNT] = [
+    const TILES_AMOUNT: usize = 330;
+    let mut tiles: [Tile; TILES_AMOUNT] = [
         Tile::new();
         TILES_AMOUNT
     ];
+    tiles[5].set_sprite(1);
+    tiles[16].set_sprite(2);
+    tiles[27].set_sprite(2);
 
     let mut previous_time = time::Instant::now();
 
@@ -125,8 +134,8 @@ fn main() {
                     window,
                 );
 
-                const SUN_RELATIVE_HORIZONTAL_POSITION: f64 = 50.0;
-                const SUN_RELATIVE_VERTICAL_POSITION: f64 = -800.0;
+                const SUN_RELATIVE_HORIZONTAL_POSITION: f64 = -730.0;
+                const SUN_RELATIVE_VERTICAL_POSITION: f64 = -260.0;
 
                 let sun_horizontal_position = SUN_RELATIVE_HORIZONTAL_POSITION +
                     origin_horizontal_position;
@@ -158,7 +167,7 @@ fn main() {
 
                 for (index, tile) in tiles.iter().enumerate() {
 
-                    const TILES_PER_LINE: usize = 25;
+                    const TILES_PER_LINE: usize = 11;
 
                     if index != 0 &&
                         index % TILES_PER_LINE == 0 {
@@ -171,7 +180,7 @@ fn main() {
                     const TILE_HORIZONTAL_DISTANCE: f64 = 47.5;
                     const TILE_VERTICAL_DISTANCE: f64 = 34.0;
 
-                    let tile_horizontal_position = TILE_HORIZONTAL_OFFSET +
+                    let tile_horizontal_position = TILE_HORIZONTAL_OFFSET -
                         TILE_HORIZONTAL_DISTANCE * (column as f64) +
                         TILE_HORIZONTAL_DISTANCE * (line as f64) +
                         origin_horizontal_position;
@@ -182,7 +191,7 @@ fn main() {
                         continue;
                     }
 
-                    let tile_vertical_position = TILE_VERTICAL_OFFSET -
+                    let tile_vertical_position = TILE_VERTICAL_OFFSET +
                         TILE_VERTICAL_DISTANCE * (column as f64) +
                         TILE_VERTICAL_DISTANCE * (line as f64) +
                         origin_vertical_position;
