@@ -8,6 +8,7 @@ use piston_window::{
     PistonWindow,
     WindowSettings,
     Texture,
+    G2dTexture,
     TextureSettings,
     Transformed,
     Flip,
@@ -19,6 +20,32 @@ use piston_window::{
 };
 
 use tile::Tile;
+
+/// Refactored code to load a texture from a given image file name. Looks for files into the images resources folder.
+///
+/// # Args:
+///
+/// `window` - the window where the textures will be displayed
+/// `image` - the file of the image to load
+fn load_texture_from_file(
+    window: &mut PistonWindow,
+    file_name: &str,
+) -> G2dTexture {
+
+    const IMAGES_FOLDER: &str = "res/images/";
+    let file_path = format!(
+        "{}/{}",
+        IMAGES_FOLDER,
+        file_name,
+    );
+
+    Texture::from_path(
+        &mut window.create_texture_context(),
+        file_path,
+        Flip::None,
+        &TextureSettings::new(),
+    ).unwrap()
+}
 
 fn main() {
 
@@ -37,38 +64,15 @@ fn main() {
         .build()
         .unwrap();
 
-    let sun = Texture::from_path(
-        &mut window.create_texture_context(),
-        "res/images/sun.png",
-        Flip::None,
-        &TextureSettings::new(),
-    ).unwrap();
+    let sun = load_texture_from_file(&mut window, "sun.png");
+    let palm = load_texture_from_file(&mut window, "palm.png");
 
     let all_tiles = [
-        Texture::from_path(
-            &mut window.create_texture_context(),
-            "res/images/default.png",
-            Flip::None,
-            &TextureSettings::new(),
-        ).unwrap(),
-        Texture::from_path(
-            &mut window.create_texture_context(),
-            "res/images/arrival_0.png",
-            Flip::None,
-            &TextureSettings::new(),
-        ).unwrap(),
-        Texture::from_path(
-            &mut window.create_texture_context(),
-            "res/images/arrival_1.png",
-            Flip::None,
-            &TextureSettings::new(),
-        ).unwrap(),
-        Texture::from_path(
-            &mut window.create_texture_context(),
-            "res/images/road.png",
-            Flip::None,
-            &TextureSettings::new(),
-        ).unwrap()
+        load_texture_from_file(&mut window, "default.png"),
+        load_texture_from_file(&mut window, "arrival_0.png"),
+        load_texture_from_file(&mut window, "arrival_1.png"),
+        load_texture_from_file(&mut window, "road.png"),
+        load_texture_from_file(&mut window, "palm.png"),
     ];
 
     const TILE_HORIZONTAL_OFFSET: f64 = -75.0;
@@ -145,17 +149,8 @@ fn main() {
             &event,
             |context, window, _| {
 
-                const BACKGROUND_COLOR: [f32; 4] = [
-                    0.06,
-                    0.0,
-                    0.1,
-                    0.0,
-                ];
-
-                clear(
-                    BACKGROUND_COLOR,
-                    window,
-                );
+                const BACKGROUND_COLOR: [f32; 4] = [0.06, 0.0, 0.1, 0.0];
+                clear(BACKGROUND_COLOR, window);
 
                 const SUN_RELATIVE_HORIZONTAL_POSITION: f64 = -730.0;
                 const SUN_RELATIVE_VERTICAL_POSITION: f64 = -260.0;
@@ -185,6 +180,47 @@ fn main() {
                     );
                 }
 
+                const TILE_HORIZONTAL_DISTANCE: f64 = 47.5;
+                const TILE_VERTICAL_DISTANCE: f64 = 34.0;
+
+                const TOP_PALMS_HORIZONTAL_OFFSET: f64 = -30.0;
+                const TOP_PALMS_VERTICAL_OFFSET: f64 = -50.0;
+
+                const SIDES_PALMS_AMOUNT: usize = 14;
+
+                const TILE_WIDTH: f64 = 250.0;
+                const TILE_HEIGHT: f64 = 150.0;
+
+                for index in 0..SIDES_PALMS_AMOUNT {
+
+                    let horizontal_position = origin_horizontal_position +
+                        TOP_PALMS_HORIZONTAL_OFFSET +
+                        index as f64 * TILE_HORIZONTAL_DISTANCE * 2.0;
+
+                    if horizontal_position < -TILE_WIDTH ||
+                        horizontal_position > WINDOW_WIDTH {
+                        continue;
+                    }
+
+                    let vertical_position = origin_vertical_position +
+                        TOP_PALMS_VERTICAL_OFFSET +
+                        index as f64 * TILE_VERTICAL_DISTANCE * 2.0;
+
+                    if vertical_position < -TILE_HEIGHT ||
+                        vertical_position > WINDOW_HEIGHT {
+                        continue;
+                    }
+
+                    image(
+                        &palm,
+                        context.transform.trans(
+                            horizontal_position,
+                            vertical_position,
+                        ),
+                        window,
+                    );
+                }
+
                 let mut column: usize = 0;
                 let mut line: usize = 0;
 
@@ -197,11 +233,6 @@ fn main() {
                         column = 0;
                         line += 1;
                     }
-
-                    const TILE_WIDTH: f64 = 250.0;
-                    const TILE_HEIGHT: f64 = 150.0;
-                    const TILE_HORIZONTAL_DISTANCE: f64 = 47.5;
-                    const TILE_VERTICAL_DISTANCE: f64 = 34.0;
 
                     let tile_horizontal_position = TILE_HORIZONTAL_OFFSET -
                         TILE_HORIZONTAL_DISTANCE * (column as f64) +
@@ -235,6 +266,39 @@ fn main() {
                     );
 
                     column += 1;
+                }
+
+                const BOTTOM_PALMS_HORIZONTAL_OFFSET: f64 = -600.0;
+                const BOTTOM_PALMS_VERTICAL_OFFSET: f64 = 370.0;
+
+                for index in 0..SIDES_PALMS_AMOUNT {
+
+                    let horizontal_position = origin_horizontal_position +
+                        BOTTOM_PALMS_HORIZONTAL_OFFSET +
+                        index as f64 * TILE_HORIZONTAL_DISTANCE * 2.0;
+
+                    if horizontal_position < -TILE_WIDTH ||
+                        horizontal_position > WINDOW_WIDTH {
+                        continue;
+                    }
+
+                    let vertical_position = origin_vertical_position +
+                        BOTTOM_PALMS_VERTICAL_OFFSET +
+                        index as f64 * TILE_VERTICAL_DISTANCE * 2.0;
+
+                    if vertical_position < -TILE_HEIGHT ||
+                        vertical_position > WINDOW_HEIGHT {
+                        continue;
+                    }
+
+                    image(
+                        &palm,
+                        context.transform.trans(
+                            horizontal_position,
+                            vertical_position,
+                        ),
+                        window,
+                    );
                 }
             }
         );
