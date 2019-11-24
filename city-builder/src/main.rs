@@ -59,6 +59,12 @@ fn main() {
         ).unwrap(),
         Texture::from_path(
             &mut window.create_texture_context(),
+            "res/images/arrival_off.png",
+            Flip::None,
+            &TextureSettings::new(),
+        ).unwrap(),
+        Texture::from_path(
+            &mut window.create_texture_context(),
             "res/images/ground_road_1.png",
             Flip::None,
             &TextureSettings::new(),
@@ -76,13 +82,30 @@ fn main() {
         Tile::new();
         TILES_AMOUNT
     ];
-    tiles[5].set_sprite(1);
-    tiles[16].set_sprite(2);
-    tiles[27].set_sprite(2);
 
-    let mut previous_time = time::Instant::now();
+    const ARRIVAL_TILE_INDEX: usize = 5;
+    const FIRST_ARRIVAL_SPRITE_INDEX: usize = 1;
+    const SECOND_ARRIVAL_SPRITE_INDEX: usize = 2;
+    tiles[ARRIVAL_TILE_INDEX].set_sprite(FIRST_ARRIVAL_SPRITE_INDEX);
+
+    let mut event_previous_time = time::Instant::now();
+    let mut animations_previous_time = time::Instant::now();
 
     while let Some(event) = window.next() {
+
+        const ANIMATION_INTERVAL: u128 = 100;
+        if time::Instant::now().duration_since(animations_previous_time).as_millis() >
+            ANIMATION_INTERVAL {
+
+            let arrival_sprite = &mut tiles[ARRIVAL_TILE_INDEX];
+            if arrival_sprite.get_sprite() == FIRST_ARRIVAL_SPRITE_INDEX {
+                arrival_sprite.set_sprite(SECOND_ARRIVAL_SPRITE_INDEX);
+            } else {
+                arrival_sprite.set_sprite(FIRST_ARRIVAL_SPRITE_INDEX);
+            }
+
+            animations_previous_time = time::Instant::now();
+        }
 
         let pressed_key = event.press_args();
 
@@ -90,31 +113,31 @@ fn main() {
         const CAMERA_MOVEMENT_INTERVAL: u128 = 25;
 
         if let Some(Button::Keyboard(Key::Up)) = pressed_key {
-            if time::Instant::now().duration_since(previous_time).as_millis() >
+            if time::Instant::now().duration_since(event_previous_time).as_millis() >
                 CAMERA_MOVEMENT_INTERVAL {
                 origin_vertical_position += CAMERA_MOVEMENT_OFFSET;
-                previous_time = time::Instant::now();
+                event_previous_time = time::Instant::now();
             }
         }
         else if let Some(Button::Keyboard(Key::Down)) = pressed_key {
-            if time::Instant::now().duration_since(previous_time).as_millis() >
+            if time::Instant::now().duration_since(event_previous_time).as_millis() >
                 CAMERA_MOVEMENT_INTERVAL {
                 origin_vertical_position -= CAMERA_MOVEMENT_OFFSET;
-                previous_time = time::Instant::now();
+                event_previous_time = time::Instant::now();
             }
         }
         else if let Some(Button::Keyboard(Key::Left)) = pressed_key {
-            if time::Instant::now().duration_since(previous_time).as_millis() >
+            if time::Instant::now().duration_since(event_previous_time).as_millis() >
                 CAMERA_MOVEMENT_INTERVAL {
                 origin_horizontal_position += CAMERA_MOVEMENT_OFFSET;
-                previous_time = time::Instant::now();
+                event_previous_time = time::Instant::now();
             }
         }
         else if let Some(Button::Keyboard(Key::Right)) = pressed_key {
-            if time::Instant::now().duration_since(previous_time).as_millis() >
+            if time::Instant::now().duration_since(event_previous_time).as_millis() >
                 CAMERA_MOVEMENT_INTERVAL {
                 origin_horizontal_position -= CAMERA_MOVEMENT_OFFSET;
-                previous_time = time::Instant::now();
+                event_previous_time = time::Instant::now();
             }
         }
 
