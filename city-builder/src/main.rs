@@ -15,9 +15,11 @@ use piston_window::{
     Button,
     Key,
     PressEvent,
+    Glyphs,
     clear,
     image,
     rectangle,
+    text,
 };
 
 use tile::Tile;
@@ -75,6 +77,13 @@ fn main() {
         load_texture_from_file(&mut window, "road.png"),
         load_texture_from_file(&mut window, "palm.png"),
     ];
+
+    const SELECTOR_DIGITS_FONT_FILE_PATH: &str = "res/fonts/fast_money.ttf";
+    let mut selector_digits_font = Glyphs::new(
+        SELECTOR_DIGITS_FONT_FILE_PATH,
+        window.create_texture_context(),
+        TextureSettings::new(),
+    ).unwrap();
 
     const TILE_HORIZONTAL_OFFSET: f64 = -75.0;
     const TILE_VERTICAL_OFFSET: f64 = -25.0;
@@ -148,7 +157,7 @@ fn main() {
 
         window.draw_2d(
             &event,
-            |context, window, _| {
+            |context, window, device| {
 
                 const BACKGROUND_COLOR: [f32; 4] = [0.06, 0.0, 0.1, 0.0];
                 clear(BACKGROUND_COLOR, window);
@@ -347,6 +356,47 @@ fn main() {
                     ),
                     window,
                 );
+
+                const GRAY_COLOR: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
+                const SELECTABLE_TILE_COUNTER_FONT_SIZE: u32 = 16;
+
+                const FIRST_SELECTABLE_TILE_COUNTER_VALUE: &str = "3";
+                const FIRST_SELECTABLE_TILE_COUNTER_HORIZONTAL_POSITION: f64 = 100.0;
+                const FIRST_SELECTABLE_TILE_COUNTER_VERTICAL_POSITION: f64 = 630.0;
+                text::Text::new_color(
+                    GRAY_COLOR,
+                    SELECTABLE_TILE_COUNTER_FONT_SIZE,
+                ).draw(
+                    FIRST_SELECTABLE_TILE_COUNTER_VALUE,
+                    &mut selector_digits_font,
+                    &context.draw_state,
+                    context.transform.trans(
+                        FIRST_SELECTABLE_TILE_COUNTER_HORIZONTAL_POSITION,
+                        FIRST_SELECTABLE_TILE_COUNTER_VERTICAL_POSITION,
+                    ),
+                    window,
+                ).unwrap();
+
+                const SECOND_SELECTABLE_TILE_COUNTER_VALUE: &str = "3";
+                const SECOND_SELECTABLE_TILE_COUNTER_HORIZONTAL_POSITION: f64 = 220.0;
+                const SECOND_SELECTABLE_TILE_COUNTER_VERTICAL_POSITION: f64 = 630.0;
+                text::Text::new_color(
+                    GRAY_COLOR,
+                    SELECTABLE_TILE_COUNTER_FONT_SIZE,
+                ).draw(
+                    SECOND_SELECTABLE_TILE_COUNTER_VALUE,
+                    &mut selector_digits_font,
+                    &context.draw_state,
+                    context.transform.trans(
+                        SECOND_SELECTABLE_TILE_COUNTER_HORIZONTAL_POSITION,
+                        SECOND_SELECTABLE_TILE_COUNTER_VERTICAL_POSITION,
+                    ),
+                    window,
+                ).unwrap();
+
+                selector_digits_font.factory
+                    .encoder
+                    .flush(device);
             }
         );
     }
