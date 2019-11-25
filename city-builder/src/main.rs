@@ -323,6 +323,18 @@ fn main() {
                     context.transform,
                     window,
                 );
+
+                const ROAD_TILE_INDEX: usize = 3;
+                const FIRST_SELECTABLE_TILE_HORIZONTAL_POSITION: f64 = -60.0;
+                const FIRST_SELECTABLE_TILE_VERTICAL_POSITION: f64 = 535.0;
+                image(
+                    &all_tiles[ROAD_TILE_INDEX],
+                    context.transform.trans(
+                        FIRST_SELECTABLE_TILE_HORIZONTAL_POSITION,
+                        FIRST_SELECTABLE_TILE_VERTICAL_POSITION,
+                    ),
+                    window,
+                );
             }
         );
     }
