@@ -59,7 +59,7 @@ fn main() {
             WINDOW_HEIGHT,
         ],
     )
-        .fullscreen(true)
+        .fullscreen(false)
         .exit_on_esc(true)
         .build()
         .unwrap();
