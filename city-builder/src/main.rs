@@ -186,15 +186,38 @@ fn main() {
                 const TOP_PALMS_HORIZONTAL_OFFSET: f64 = -30.0;
                 const TOP_PALMS_VERTICAL_OFFSET: f64 = -50.0;
 
-                const SIDES_PALMS_AMOUNT: usize = 14;
+                const BOTTOM_PALMS_HORIZONTAL_OFFSET: f64 = -600.0;
+                const BOTTOM_PALMS_VERTICAL_OFFSET: f64 = 370.0;
+
+                const SIDES_PALMS_AMOUNT: usize = 28;
+                const ONE_SIDE_PALMS_AMOUNT: usize = SIDES_PALMS_AMOUNT / 2;
 
                 const TILE_WIDTH: f64 = 250.0;
                 const TILE_HEIGHT: f64 = 150.0;
 
                 for index in 0..SIDES_PALMS_AMOUNT {
 
+                    let (
+                        index,
+                        horizontal_offset,
+                        vertical_offset
+                    ) = if index >= ONE_SIDE_PALMS_AMOUNT {
+
+                        (
+                            index - ONE_SIDE_PALMS_AMOUNT,
+                            BOTTOM_PALMS_HORIZONTAL_OFFSET,
+                            BOTTOM_PALMS_VERTICAL_OFFSET,
+                        )
+                    } else {
+                        (
+                            index,
+                            TOP_PALMS_HORIZONTAL_OFFSET,
+                            TOP_PALMS_VERTICAL_OFFSET,
+                        )
+                    };
+
                     let horizontal_position = origin_horizontal_position +
-                        TOP_PALMS_HORIZONTAL_OFFSET +
+                        horizontal_offset +
                         index as f64 * TILE_HORIZONTAL_DISTANCE * 2.0;
 
                     if horizontal_position < -TILE_WIDTH ||
@@ -203,7 +226,7 @@ fn main() {
                     }
 
                     let vertical_position = origin_vertical_position +
-                        TOP_PALMS_VERTICAL_OFFSET +
+                        vertical_offset +
                         index as f64 * TILE_VERTICAL_DISTANCE * 2.0;
 
                     if vertical_position < -TILE_HEIGHT ||
@@ -266,39 +289,6 @@ fn main() {
                     );
 
                     column += 1;
-                }
-
-                const BOTTOM_PALMS_HORIZONTAL_OFFSET: f64 = -600.0;
-                const BOTTOM_PALMS_VERTICAL_OFFSET: f64 = 370.0;
-
-                for index in 0..SIDES_PALMS_AMOUNT {
-
-                    let horizontal_position = origin_horizontal_position +
-                        BOTTOM_PALMS_HORIZONTAL_OFFSET +
-                        index as f64 * TILE_HORIZONTAL_DISTANCE * 2.0;
-
-                    if horizontal_position < -TILE_WIDTH ||
-                        horizontal_position > WINDOW_WIDTH {
-                        continue;
-                    }
-
-                    let vertical_position = origin_vertical_position +
-                        BOTTOM_PALMS_VERTICAL_OFFSET +
-                        index as f64 * TILE_VERTICAL_DISTANCE * 2.0;
-
-                    if vertical_position < -TILE_HEIGHT ||
-                        vertical_position > WINDOW_HEIGHT {
-                        continue;
-                    }
-
-                    image(
-                        &palm,
-                        context.transform.trans(
-                            horizontal_position,
-                            vertical_position,
-                        ),
-                        window,
-                    );
                 }
             }
         );
