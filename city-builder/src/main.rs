@@ -17,6 +17,7 @@ use piston_window::{
     PressEvent,
     clear,
     image,
+    rectangle,
 };
 
 use tile::Tile;
@@ -290,6 +291,22 @@ fn main() {
 
                     column += 1;
                 }
+
+                const WHITE_COLOR: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
+                const SEPARATOR_HORIZONTAL_POSITION: f64 = 0.0;
+                const SEPARATOR_VERTICAL_POSITION: f64 = 550.0;
+                const SEPARATOR_HEIGHT: f64 = 1.0;
+                rectangle(
+                    WHITE_COLOR,
+                    [
+                        SEPARATOR_HORIZONTAL_POSITION,
+                        SEPARATOR_VERTICAL_POSITION,
+                        WINDOW_WIDTH,
+                        SEPARATOR_HEIGHT,
+                    ],
+                    context.transform,
+                    window,
+                );
             }
         );
     }
