@@ -307,6 +307,22 @@ fn main() {
                     context.transform,
                     window,
                 );
+
+                const BLACK_COLOR: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
+                const SELECTOR_HORIZONTAL_POSITION: f64 = 0.0;
+                const SELECTOR_VERTICAL_POSITION: f64 = 551.0;
+                const SELECTOR_HEIGHT: f64 = 100.0;
+                rectangle(
+                    BLACK_COLOR,
+                    [
+                        SELECTOR_HORIZONTAL_POSITION,
+                        SELECTOR_VERTICAL_POSITION,
+                        WINDOW_WIDTH,
+                        SELECTOR_HEIGHT,
+                    ],
+                    context.transform,
+                    window,
+                );
             }
         );
     }
