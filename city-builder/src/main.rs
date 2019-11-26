@@ -52,8 +52,8 @@ fn load_texture_from_file(
 
 fn main() {
 
-    const WINDOW_WIDTH: f64 = 1600.0;
-    const WINDOW_HEIGHT: f64 = 900.0;
+    const WINDOW_WIDTH: f64 = 800.0;
+    const WINDOW_HEIGHT: f64 = 600.0;
 
     let mut window: PistonWindow = WindowSettings::new(
         "City Builder",
@@ -123,7 +123,7 @@ fn main() {
 
         let pressed_key = event.press_args();
 
-        const CAMERA_MOVEMENT_OFFSET: f64 = 5.0;
+        const CAMERA_MOVEMENT_OFFSET: f64 = 10.0;
         const CAMERA_MOVEMENT_INTERVAL: u128 = 25;
 
         if let Some(Button::Keyboard(Key::Up)) = pressed_key {
@@ -303,7 +303,7 @@ fn main() {
 
                 const WHITE_COLOR: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
                 const SEPARATOR_HORIZONTAL_POSITION: f64 = 0.0;
-                const SEPARATOR_VERTICAL_POSITION: f64 = 550.0;
+                const SEPARATOR_VERTICAL_POSITION: f64 = 500.0;
                 const SEPARATOR_HEIGHT: f64 = 1.0;
                 rectangle(
                     WHITE_COLOR,
@@ -319,7 +319,7 @@ fn main() {
 
                 const BLACK_COLOR: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
                 const SELECTOR_HORIZONTAL_POSITION: f64 = 0.0;
-                const SELECTOR_VERTICAL_POSITION: f64 = 551.0;
+                const SELECTOR_VERTICAL_POSITION: f64 = 501.0;
                 const SELECTOR_HEIGHT: f64 = 100.0;
                 rectangle(
                     BLACK_COLOR,
@@ -335,7 +335,7 @@ fn main() {
 
                 const FIRST_SELECTABLE_TILE_INDEX: usize = 3;
                 const FIRST_SELECTABLE_TILE_HORIZONTAL_POSITION: f64 = -60.0;
-                const FIRST_SELECTABLE_TILE_VERTICAL_POSITION: f64 = 535.0;
+                const FIRST_SELECTABLE_TILE_VERTICAL_POSITION: f64 = 490.0;
                 image(
                     &all_tiles[FIRST_SELECTABLE_TILE_INDEX],
                     context.transform.trans(
@@ -347,7 +347,7 @@ fn main() {
 
                 const SECOND_SELECTABLE_TILE_INDEX: usize = 3;
                 const SECOND_SELECTABLE_TILE_HORIZONTAL_POSITION: f64 = 60.0;
-                const SECOND_SELECTABLE_TILE_VERTICAL_POSITION: f64 = 535.0;
+                const SECOND_SELECTABLE_TILE_VERTICAL_POSITION: f64 = 490.0;
                 image(
                     &all_tiles[SECOND_SELECTABLE_TILE_INDEX],
                     context.transform.trans(
@@ -362,7 +362,7 @@ fn main() {
 
                 const FIRST_SELECTABLE_TILE_COUNTER_VALUE: &str = "3";
                 const FIRST_SELECTABLE_TILE_COUNTER_HORIZONTAL_POSITION: f64 = 100.0;
-                const FIRST_SELECTABLE_TILE_COUNTER_VERTICAL_POSITION: f64 = 630.0;
+                const FIRST_SELECTABLE_TILE_COUNTER_VERTICAL_POSITION: f64 = 590.0;
                 text::Text::new_color(
                     GRAY_COLOR,
                     SELECTABLE_TILE_COUNTER_FONT_SIZE,
@@ -379,7 +379,7 @@ fn main() {
 
                 const SECOND_SELECTABLE_TILE_COUNTER_VALUE: &str = "3";
                 const SECOND_SELECTABLE_TILE_COUNTER_HORIZONTAL_POSITION: f64 = 220.0;
-                const SECOND_SELECTABLE_TILE_COUNTER_VERTICAL_POSITION: f64 = 630.0;
+                const SECOND_SELECTABLE_TILE_COUNTER_VERTICAL_POSITION: f64 = 590.0;
                 text::Text::new_color(
                     GRAY_COLOR,
                     SELECTABLE_TILE_COUNTER_FONT_SIZE,
