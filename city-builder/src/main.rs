@@ -76,6 +76,11 @@ fn main() {
         load_texture_from_file(&mut window, "arrival_1.png"),
         load_texture_from_file(&mut window, "road.png"),
         load_texture_from_file(&mut window, "palm.png"),
+        load_texture_from_file(&mut window, "departure_0.png"),
+        load_texture_from_file(&mut window, "departure_1.png"),
+        load_texture_from_file(&mut window, "departure_2.png"),
+        load_texture_from_file(&mut window, "departure_3.png"),
+        load_texture_from_file(&mut window, "departure_4.png"),
     ];
 
     const SELECTOR_DIGITS_FONT_FILE_PATH: &str = "res/fonts/fast_money.ttf";
@@ -102,8 +107,15 @@ fn main() {
     const SECOND_ARRIVAL_SPRITE_INDEX: usize = 2;
     tiles[ARRIVAL_TILE_INDEX].set_sprite(FIRST_ARRIVAL_SPRITE_INDEX);
 
+    const DEPARTURE_TILE_INDEX: usize = 11;
+    const FIRST_DEPARTURE_SPRITE_INDEX: usize = 5;
+    const LAST_DEPARTURE_SPRITE_INDEX: usize = 9;
+    tiles[DEPARTURE_TILE_INDEX].set_sprite(FIRST_DEPARTURE_SPRITE_INDEX);
+
     let mut event_previous_time = time::Instant::now();
     let mut animations_previous_time = time::Instant::now();
+
+    let mut animated_departure_current_index: usize = FIRST_DEPARTURE_SPRITE_INDEX;
 
     while let Some(event) = window.next() {
 
@@ -117,6 +129,14 @@ fn main() {
             } else {
                 arrival_sprite.set_sprite(FIRST_ARRIVAL_SPRITE_INDEX);
             }
+
+            animated_departure_current_index = if animated_departure_current_index == LAST_DEPARTURE_SPRITE_INDEX {
+                FIRST_DEPARTURE_SPRITE_INDEX
+            } else {
+                animated_departure_current_index + 1
+            };
+            let departure_sprite = &mut tiles[DEPARTURE_TILE_INDEX];
+            departure_sprite.set_sprite(animated_departure_current_index);
 
             animations_previous_time = time::Instant::now();
         }
