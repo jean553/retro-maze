@@ -1,7 +1,5 @@
 extern crate piston_window;
 
-mod tile;
-
 use std::time;
 
 use piston_window::{
@@ -21,8 +19,6 @@ use piston_window::{
     rectangle,
     text,
 };
-
-use tile::Tile;
 
 /// Refactored code to load a texture from a given image file name. Looks for files into the images resources folder.
 ///
@@ -98,25 +94,24 @@ fn main() {
     let mut origin_vertical_position: f64 = 0.0;
 
     const TILES_AMOUNT: usize = 330;
-    let mut tiles: [Tile; TILES_AMOUNT] = [
-        Tile::new();
+    const DEFAULT_SPRITE_INDEX: usize = 0;
+    let mut tiles: [usize; TILES_AMOUNT] = [
+        DEFAULT_SPRITE_INDEX;
         TILES_AMOUNT
     ];
 
     const ARRIVAL_TILE_INDEX: usize = 5;
     const FIRST_ARRIVAL_SPRITE_INDEX: usize = 1;
     const SECOND_ARRIVAL_SPRITE_INDEX: usize = 2;
-    tiles[ARRIVAL_TILE_INDEX].set_sprite(FIRST_ARRIVAL_SPRITE_INDEX);
+    tiles[ARRIVAL_TILE_INDEX] = FIRST_ARRIVAL_SPRITE_INDEX;
 
     const DEPARTURE_TILE_INDEX: usize = 38;
     const FIRST_DEPARTURE_SPRITE_INDEX: usize = 5;
     const LAST_DEPARTURE_SPRITE_INDEX: usize = 9;
-    tiles[DEPARTURE_TILE_INDEX].set_sprite(FIRST_DEPARTURE_SPRITE_INDEX);
+    tiles[DEPARTURE_TILE_INDEX] = FIRST_DEPARTURE_SPRITE_INDEX;
 
-    const SELECTED_TILE_INDEX: usize = 27;
     const FIRST_SELECTED_SPRITE_INDEX: usize = 0;
     const SECOND_SELECTED_SPRITE_INDEX: usize = 10;
-    tiles[SELECTED_TILE_INDEX].set_sprite(FIRST_SELECTED_SPRITE_INDEX);
 
     let mut event_previous_time = time::Instant::now();
     let mut animations_previous_time = time::Instant::now();
@@ -124,17 +119,20 @@ fn main() {
     let mut animated_departure_current_index: usize = FIRST_DEPARTURE_SPRITE_INDEX;
     let mut animated_selected_current_index: usize = FIRST_SELECTED_SPRITE_INDEX;
 
+    const DEFAULT_SELECTED_TILE_INDEX: usize = 27;
+    let mut selected_tile_index: usize = DEFAULT_SELECTED_TILE_INDEX;
+
     while let Some(event) = window.next() {
 
         const ANIMATION_INTERVAL: u128 = 100;
         if time::Instant::now().duration_since(animations_previous_time).as_millis() >
             ANIMATION_INTERVAL {
 
-            let arrival_sprite = &mut tiles[ARRIVAL_TILE_INDEX];
-            if arrival_sprite.get_sprite() == FIRST_ARRIVAL_SPRITE_INDEX {
-                arrival_sprite.set_sprite(SECOND_ARRIVAL_SPRITE_INDEX);
+            let mut arrival_sprite = &mut tiles[ARRIVAL_TILE_INDEX];
+            if arrival_sprite == &FIRST_ARRIVAL_SPRITE_INDEX {
+                arrival_sprite = &mut SECOND_ARRIVAL_SPRITE_INDEX;
             } else {
-                arrival_sprite.set_sprite(FIRST_ARRIVAL_SPRITE_INDEX);
+                arrival_sprite = &mut FIRST_ARRIVAL_SPRITE_INDEX;
             }
 
             animated_departure_current_index = if animated_departure_current_index == LAST_DEPARTURE_SPRITE_INDEX {
@@ -142,16 +140,16 @@ fn main() {
             } else {
                 animated_departure_current_index + 1
             };
-            let departure_sprite = &mut tiles[DEPARTURE_TILE_INDEX];
-            departure_sprite.set_sprite(animated_departure_current_index);
+            let mut departure_sprite = &mut tiles[DEPARTURE_TILE_INDEX];
+            departure_sprite = &mut animated_departure_current_index;
 
             animated_selected_current_index = if animated_selected_current_index == SECOND_SELECTED_SPRITE_INDEX {
                 FIRST_SELECTED_SPRITE_INDEX
             } else {
                 SECOND_SELECTED_SPRITE_INDEX
             };
-            let selected_sprite = &mut tiles[SELECTED_TILE_INDEX];
-            selected_sprite.set_sprite(animated_selected_current_index);
+            let mut selected_sprite = &mut tiles[selected_tile_index];
+            selected_sprite = &mut animated_selected_current_index;
 
             animations_previous_time = time::Instant::now();
         }
@@ -194,7 +192,8 @@ fn main() {
             /* TODO: simply "visually" adds one road for now,
                but it should also update the selected tile
                in order to ensure future iterations */
-            tiles[SELECTED_TILE_INDEX].set_sprite(3);
+            tiles[selected_tile_index] = 3;
+            selected_tile_index -= 11;
         }
 
         window.draw_2d(
@@ -332,7 +331,7 @@ fn main() {
                     }
 
                     image(
-                        &all_tiles[tile.get_sprite()],
+                        &all_tiles[*tile],
                         context.transform.trans(
                             tile_horizontal_position,
                             tile_vertical_position
