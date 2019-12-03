@@ -1,5 +1,7 @@
 extern crate piston_window;
 
+mod gui;
+
 use std::time;
 
 use piston_window::{
@@ -16,9 +18,10 @@ use piston_window::{
     Glyphs,
     clear,
     image,
-    rectangle,
     text,
 };
+
+use gui::display_selector;
 
 /// Refactored code to load a texture from a given image file name. Looks for files into the images resources folder.
 ///
@@ -334,36 +337,9 @@ fn main() {
                     column += 1;
                 }
 
-                const WHITE_COLOR: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
-                const SEPARATOR_HORIZONTAL_POSITION: f64 = 0.0;
-                const SEPARATOR_VERTICAL_POSITION: f64 = 500.0;
-                const SEPARATOR_HEIGHT: f64 = 1.0;
-                rectangle(
-                    WHITE_COLOR,
-                    [
-                        SEPARATOR_HORIZONTAL_POSITION,
-                        SEPARATOR_VERTICAL_POSITION,
-                        WINDOW_WIDTH,
-                        SEPARATOR_HEIGHT,
-                    ],
-                    context.transform,
+                display_selector(
                     window,
-                );
-
-                const BLACK_COLOR: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
-                const SELECTOR_HORIZONTAL_POSITION: f64 = 0.0;
-                const SELECTOR_VERTICAL_POSITION: f64 = 501.0;
-                const SELECTOR_HEIGHT: f64 = 100.0;
-                rectangle(
-                    BLACK_COLOR,
-                    [
-                        SELECTOR_HORIZONTAL_POSITION,
-                        SELECTOR_VERTICAL_POSITION,
-                        WINDOW_WIDTH,
-                        SELECTOR_HEIGHT,
-                    ],
-                    context.transform,
-                    window,
+                    &context.transform,
                 );
 
                 const FIRST_SELECTABLE_TILE_INDEX: usize = 3;
