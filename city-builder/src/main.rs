@@ -189,6 +189,13 @@ fn main() {
                 event_previous_time = time::Instant::now();
             }
         }
+        else if let Some(Button::Keyboard(Key::Return)) = pressed_key {
+
+            /* TODO: simply "visually" adds one road for now,
+               but it should also update the selected tile
+               in order to ensure future iterations */
+            tiles[SELECTED_TILE_INDEX].set_sprite(3);
+        }
 
         window.draw_2d(
             &event,
