@@ -81,6 +81,7 @@ fn main() {
         load_texture_from_file(&mut window, "departure_2.png"),
         load_texture_from_file(&mut window, "departure_3.png"),
         load_texture_from_file(&mut window, "departure_4.png"),
+        load_texture_from_file(&mut window, "selected_ground.png"),
     ];
 
     const SELECTOR_DIGITS_FONT_FILE_PATH: &str = "res/fonts/fast_money.ttf";
@@ -107,15 +108,21 @@ fn main() {
     const SECOND_ARRIVAL_SPRITE_INDEX: usize = 2;
     tiles[ARRIVAL_TILE_INDEX].set_sprite(FIRST_ARRIVAL_SPRITE_INDEX);
 
-    const DEPARTURE_TILE_INDEX: usize = 11;
+    const DEPARTURE_TILE_INDEX: usize = 38;
     const FIRST_DEPARTURE_SPRITE_INDEX: usize = 5;
     const LAST_DEPARTURE_SPRITE_INDEX: usize = 9;
     tiles[DEPARTURE_TILE_INDEX].set_sprite(FIRST_DEPARTURE_SPRITE_INDEX);
+
+    const SELECTED_TILE_INDEX: usize = 27;
+    const FIRST_SELECTED_SPRITE_INDEX: usize = 0;
+    const SECOND_SELECTED_SPRITE_INDEX: usize = 10;
+    tiles[SELECTED_TILE_INDEX].set_sprite(FIRST_SELECTED_SPRITE_INDEX);
 
     let mut event_previous_time = time::Instant::now();
     let mut animations_previous_time = time::Instant::now();
 
     let mut animated_departure_current_index: usize = FIRST_DEPARTURE_SPRITE_INDEX;
+    let mut animated_selected_current_index: usize = FIRST_SELECTED_SPRITE_INDEX;
 
     while let Some(event) = window.next() {
 
@@ -137,6 +144,14 @@ fn main() {
             };
             let departure_sprite = &mut tiles[DEPARTURE_TILE_INDEX];
             departure_sprite.set_sprite(animated_departure_current_index);
+
+            animated_selected_current_index = if animated_selected_current_index == SECOND_SELECTED_SPRITE_INDEX {
+                FIRST_SELECTED_SPRITE_INDEX
+            } else {
+                SECOND_SELECTED_SPRITE_INDEX
+            };
+            let selected_sprite = &mut tiles[SELECTED_TILE_INDEX];
+            selected_sprite.set_sprite(animated_selected_current_index);
 
             animations_previous_time = time::Instant::now();
         }
