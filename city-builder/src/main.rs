@@ -116,9 +116,6 @@ fn main() {
     let mut event_previous_time = time::Instant::now();
     let mut animations_previous_time = time::Instant::now();
 
-    let mut animated_departure_current_index: usize = FIRST_DEPARTURE_SPRITE_INDEX;
-    let mut animated_selected_current_index: usize = FIRST_SELECTED_SPRITE_INDEX;
-
     const DEFAULT_SELECTED_TILE_INDEX: usize = 27;
     let mut selected_tile_index: usize = DEFAULT_SELECTED_TILE_INDEX;
 
@@ -128,28 +125,23 @@ fn main() {
         if time::Instant::now().duration_since(animations_previous_time).as_millis() >
             ANIMATION_INTERVAL {
 
-            let mut arrival_sprite = &mut tiles[ARRIVAL_TILE_INDEX];
-            if arrival_sprite == &FIRST_ARRIVAL_SPRITE_INDEX {
-                arrival_sprite = &mut SECOND_ARRIVAL_SPRITE_INDEX;
+            if tiles[ARRIVAL_TILE_INDEX] == FIRST_ARRIVAL_SPRITE_INDEX {
+                tiles[ARRIVAL_TILE_INDEX] = SECOND_ARRIVAL_SPRITE_INDEX;
             } else {
-                arrival_sprite = &mut FIRST_ARRIVAL_SPRITE_INDEX;
+                tiles[ARRIVAL_TILE_INDEX] = FIRST_ARRIVAL_SPRITE_INDEX;
             }
 
-            animated_departure_current_index = if animated_departure_current_index == LAST_DEPARTURE_SPRITE_INDEX {
+            tiles[DEPARTURE_TILE_INDEX] = if tiles[DEPARTURE_TILE_INDEX] == LAST_DEPARTURE_SPRITE_INDEX {
                 FIRST_DEPARTURE_SPRITE_INDEX
             } else {
-                animated_departure_current_index + 1
+                tiles[DEPARTURE_TILE_INDEX] + 1
             };
-            let mut departure_sprite = &mut tiles[DEPARTURE_TILE_INDEX];
-            departure_sprite = &mut animated_departure_current_index;
 
-            animated_selected_current_index = if animated_selected_current_index == SECOND_SELECTED_SPRITE_INDEX {
+            tiles[selected_tile_index] = if tiles[selected_tile_index] == SECOND_SELECTED_SPRITE_INDEX {
                 FIRST_SELECTED_SPRITE_INDEX
             } else {
                 SECOND_SELECTED_SPRITE_INDEX
             };
-            let mut selected_sprite = &mut tiles[selected_tile_index];
-            selected_sprite = &mut animated_selected_current_index;
 
             animations_previous_time = time::Instant::now();
         }
