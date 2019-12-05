@@ -18,10 +18,12 @@ use piston_window::{
     Glyphs,
     clear,
     image,
-    text,
 };
 
-use gui::display_selector;
+use gui::{
+    display_selector,
+    display_selectable_tile,
+};
 
 /// Refactored code to load a texture from a given image file name. Looks for files into the images resources folder.
 ///
@@ -342,66 +344,27 @@ fn main() {
                     &context.transform,
                 );
 
+                const FIRST_SELECTABLE_TILE_AMOUNT: &str = "0";
                 const FIRST_SELECTABLE_TILE_INDEX: usize = 3;
-                const FIRST_SELECTABLE_TILE_HORIZONTAL_POSITION: f64 = -60.0;
-                const FIRST_SELECTABLE_TILE_VERTICAL_POSITION: f64 = 490.0;
-                image(
+                display_selectable_tile(
+                    window,
+                    &context,
+                    &mut selector_digits_font,
                     &all_tiles[FIRST_SELECTABLE_TILE_INDEX],
-                    context.transform.trans(
-                        FIRST_SELECTABLE_TILE_HORIZONTAL_POSITION,
-                        FIRST_SELECTABLE_TILE_VERTICAL_POSITION,
-                    ),
-                    window,
+                    FIRST_SELECTABLE_TILE_AMOUNT,
+                    0,
                 );
 
+                const SECOND_SELECTABLE_TILE_AMOUNT: &str = "3";
                 const SECOND_SELECTABLE_TILE_INDEX: usize = 3;
-                const SECOND_SELECTABLE_TILE_HORIZONTAL_POSITION: f64 = 60.0;
-                const SECOND_SELECTABLE_TILE_VERTICAL_POSITION: f64 = 490.0;
-                image(
+                display_selectable_tile(
+                    window,
+                    &context,
+                    &mut selector_digits_font,
                     &all_tiles[SECOND_SELECTABLE_TILE_INDEX],
-                    context.transform.trans(
-                        SECOND_SELECTABLE_TILE_HORIZONTAL_POSITION,
-                        SECOND_SELECTABLE_TILE_VERTICAL_POSITION,
-                    ),
-                    window,
+                    SECOND_SELECTABLE_TILE_AMOUNT,
+                    1,
                 );
-
-                const GRAY_COLOR: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
-                const SELECTABLE_TILE_COUNTER_FONT_SIZE: u32 = 16;
-
-                const FIRST_SELECTABLE_TILE_COUNTER_VALUE: &str = "3";
-                const FIRST_SELECTABLE_TILE_COUNTER_HORIZONTAL_POSITION: f64 = 100.0;
-                const FIRST_SELECTABLE_TILE_COUNTER_VERTICAL_POSITION: f64 = 590.0;
-                text::Text::new_color(
-                    GRAY_COLOR,
-                    SELECTABLE_TILE_COUNTER_FONT_SIZE,
-                ).draw(
-                    FIRST_SELECTABLE_TILE_COUNTER_VALUE,
-                    &mut selector_digits_font,
-                    &context.draw_state,
-                    context.transform.trans(
-                        FIRST_SELECTABLE_TILE_COUNTER_HORIZONTAL_POSITION,
-                        FIRST_SELECTABLE_TILE_COUNTER_VERTICAL_POSITION,
-                    ),
-                    window,
-                ).unwrap();
-
-                const SECOND_SELECTABLE_TILE_COUNTER_VALUE: &str = "3";
-                const SECOND_SELECTABLE_TILE_COUNTER_HORIZONTAL_POSITION: f64 = 220.0;
-                const SECOND_SELECTABLE_TILE_COUNTER_VERTICAL_POSITION: f64 = 590.0;
-                text::Text::new_color(
-                    GRAY_COLOR,
-                    SELECTABLE_TILE_COUNTER_FONT_SIZE,
-                ).draw(
-                    SECOND_SELECTABLE_TILE_COUNTER_VALUE,
-                    &mut selector_digits_font,
-                    &context.draw_state,
-                    context.transform.trans(
-                        SECOND_SELECTABLE_TILE_COUNTER_HORIZONTAL_POSITION,
-                        SECOND_SELECTABLE_TILE_COUNTER_VERTICAL_POSITION,
-                    ),
-                    window,
-                ).unwrap();
 
                 selector_digits_font.factory
                     .encoder
