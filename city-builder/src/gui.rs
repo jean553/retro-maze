@@ -2,7 +2,13 @@
 
 use piston_window::{
     G2d,
+    G2dTexture,
+    Transformed,
+    Context,
+    Glyphs,
     rectangle,
+    image,
+    text,
 };
 
 /// Displays the static selector separator and background at the bottom of the window. Only called once but refactored for readability.
@@ -49,4 +55,44 @@ pub fn display_selector(
         *transform,
         window,
     );
+}
+
+///
+pub fn display_selectable_tile(
+    window: &mut G2d,
+    context: &Context,
+    font: &mut Glyphs,
+    tile: &G2dTexture,
+    amount: &str,
+    horizontal_position: f64,
+    vertical_position: f64,
+) {
+
+    image(
+        tile,
+        context.transform.trans(
+            horizontal_position,
+            vertical_position,
+        ),
+        window,
+    );
+
+    const GRAY_COLOR: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
+    const SELECTABLE_TILE_COUNTER_FONT_SIZE: u32 = 16;
+
+    const FIRST_SELECTABLE_TILE_COUNTER_HORIZONTAL_POSITION: f64 = 100.0;
+    const FIRST_SELECTABLE_TILE_COUNTER_VERTICAL_POSITION: f64 = 590.0;
+    text::Text::new_color(
+        GRAY_COLOR,
+        SELECTABLE_TILE_COUNTER_FONT_SIZE,
+    ).draw(
+        amount,
+        font,
+        &context.draw_state,
+        context.transform.trans(
+            FIRST_SELECTABLE_TILE_COUNTER_HORIZONTAL_POSITION,
+            FIRST_SELECTABLE_TILE_COUNTER_VERTICAL_POSITION,
+        ),
+        window,
+    ).unwrap();
 }

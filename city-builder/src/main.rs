@@ -21,7 +21,10 @@ use piston_window::{
     text,
 };
 
-use gui::display_selector;
+use gui::{
+    display_selector,
+    display_selectable_tile,
+};
 
 /// Refactored code to load a texture from a given image file name. Looks for files into the images resources folder.
 ///
@@ -342,17 +345,20 @@ fn main() {
                     &context.transform,
                 );
 
-                const FIRST_SELECTABLE_TILE_INDEX: usize = 3;
                 const FIRST_SELECTABLE_TILE_HORIZONTAL_POSITION: f64 = -60.0;
-                const FIRST_SELECTABLE_TILE_VERTICAL_POSITION: f64 = 490.0;
-                image(
-                    &all_tiles[FIRST_SELECTABLE_TILE_INDEX],
-                    context.transform.trans(
-                        FIRST_SELECTABLE_TILE_HORIZONTAL_POSITION,
-                        FIRST_SELECTABLE_TILE_VERTICAL_POSITION,
-                    ),
+                const FIRST_SELECTABLE_TILE_VERTICAL_POSITION: f64 = 590.0;
+                display_selectable_tile(
                     window,
+                    &context,
+                    &mut selector_digits_font,
+                    &all_tiles[3],
+                    "0",
+                    FIRST_SELECTABLE_TILE_HORIZONTAL_POSITION,
+                    FIRST_SELECTABLE_TILE_VERTICAL_POSITION,
                 );
+
+                const GRAY_COLOR: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
+                const SELECTABLE_TILE_COUNTER_FONT_SIZE: u32 = 16;
 
                 const SECOND_SELECTABLE_TILE_INDEX: usize = 3;
                 const SECOND_SELECTABLE_TILE_HORIZONTAL_POSITION: f64 = 60.0;
@@ -365,26 +371,6 @@ fn main() {
                     ),
                     window,
                 );
-
-                const GRAY_COLOR: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
-                const SELECTABLE_TILE_COUNTER_FONT_SIZE: u32 = 16;
-
-                const FIRST_SELECTABLE_TILE_COUNTER_VALUE: &str = "3";
-                const FIRST_SELECTABLE_TILE_COUNTER_HORIZONTAL_POSITION: f64 = 100.0;
-                const FIRST_SELECTABLE_TILE_COUNTER_VERTICAL_POSITION: f64 = 590.0;
-                text::Text::new_color(
-                    GRAY_COLOR,
-                    SELECTABLE_TILE_COUNTER_FONT_SIZE,
-                ).draw(
-                    FIRST_SELECTABLE_TILE_COUNTER_VALUE,
-                    &mut selector_digits_font,
-                    &context.draw_state,
-                    context.transform.trans(
-                        FIRST_SELECTABLE_TILE_COUNTER_HORIZONTAL_POSITION,
-                        FIRST_SELECTABLE_TILE_COUNTER_VERTICAL_POSITION,
-                    ),
-                    window,
-                ).unwrap();
 
                 const SECOND_SELECTABLE_TILE_COUNTER_VALUE: &str = "3";
                 const SECOND_SELECTABLE_TILE_COUNTER_HORIZONTAL_POSITION: f64 = 220.0;
