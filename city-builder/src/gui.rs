@@ -57,7 +57,7 @@ pub fn display_selector(
     );
 }
 
-/// Refactored code to displays selectable tile into the selectable tiles bar.
+/// Displays selectable tile into the selectable tiles bar.
 ///
 /// # Args:
 ///
@@ -114,4 +114,87 @@ pub fn display_selectable_tile(
         ),
         window,
     ).unwrap();
+}
+
+/// Refactored function to display the palms.
+///
+/// # Args:
+///
+/// `window` - the window where the selector is displayed
+/// `transform` - transformation to apply on the selector when drawing
+/// `palm_sprite` - the already loaded sprite to use for the palms
+/// `origin_horizontal_position` - the origin horizontal position
+/// `origin_vertical_position` - the origin vertical position
+pub fn display_sides_palms(
+    window: &mut G2d,
+    transform: &[[f64; 3]; 2],
+    palm_sprite: &G2dTexture, 
+    origin_horizontal_position: f64,
+    origin_vertical_position: f64,
+) {
+    const TILE_HORIZONTAL_DISTANCE: f64 = 47.5;
+    const TILE_VERTICAL_DISTANCE: f64 = 34.0;
+
+    const TOP_PALMS_HORIZONTAL_OFFSET: f64 = -30.0;
+    const TOP_PALMS_VERTICAL_OFFSET: f64 = -50.0;
+
+    const BOTTOM_PALMS_HORIZONTAL_OFFSET: f64 = -600.0;
+    const BOTTOM_PALMS_VERTICAL_OFFSET: f64 = 370.0;
+
+    const SIDES_PALMS_AMOUNT: usize = 28;
+    const ONE_SIDE_PALMS_AMOUNT: usize = SIDES_PALMS_AMOUNT / 2;
+
+    const TILE_WIDTH: f64 = 250.0;
+    const TILE_HEIGHT: f64 = 150.0;
+
+    for index in 0..SIDES_PALMS_AMOUNT {
+
+        let (
+            index,
+            horizontal_offset,
+            vertical_offset
+        ) = if index >= ONE_SIDE_PALMS_AMOUNT {
+
+            (
+                index - ONE_SIDE_PALMS_AMOUNT,
+                BOTTOM_PALMS_HORIZONTAL_OFFSET,
+                BOTTOM_PALMS_VERTICAL_OFFSET,
+            )
+        } else {
+            (
+                index,
+                TOP_PALMS_HORIZONTAL_OFFSET,
+                TOP_PALMS_VERTICAL_OFFSET,
+            )
+        };
+
+        let horizontal_position = origin_horizontal_position +
+            horizontal_offset +
+            index as f64 * TILE_HORIZONTAL_DISTANCE * 2.0;
+
+        const WINDOW_WIDTH: f64 = 800.0;
+        if horizontal_position < -TILE_WIDTH ||
+            horizontal_position > WINDOW_WIDTH {
+            continue;
+        }
+
+        let vertical_position = origin_vertical_position +
+            vertical_offset +
+            index as f64 * TILE_VERTICAL_DISTANCE * 2.0;
+
+        const WINDOW_HEIGHT: f64 = 800.0;
+        if vertical_position < -TILE_HEIGHT ||
+            vertical_position > WINDOW_HEIGHT {
+            continue;
+        }
+
+        image(
+            palm_sprite,
+            transform.trans(
+                horizontal_position,
+                vertical_position,
+            ),
+            window,
+        );
+    }
 }
