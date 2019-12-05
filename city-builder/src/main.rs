@@ -23,6 +23,7 @@ use piston_window::{
 use gui::{
     display_selector,
     display_selectable_tile,
+    display_sides_palms,
 };
 
 /// Refactored code to load a texture from a given image file name. Looks for files into the images resources folder.
@@ -69,7 +70,6 @@ fn main() {
         .unwrap();
 
     let sun = load_texture_from_file(&mut window, "sun.png");
-    let palm = load_texture_from_file(&mut window, "palm.png");
 
     let all_tiles = [
         load_texture_from_file(&mut window, "default.png"),
@@ -228,69 +228,14 @@ fn main() {
                     );
                 }
 
-                const TILE_HORIZONTAL_DISTANCE: f64 = 47.5;
-                const TILE_VERTICAL_DISTANCE: f64 = 34.0;
-
-                const TOP_PALMS_HORIZONTAL_OFFSET: f64 = -30.0;
-                const TOP_PALMS_VERTICAL_OFFSET: f64 = -50.0;
-
-                const BOTTOM_PALMS_HORIZONTAL_OFFSET: f64 = -600.0;
-                const BOTTOM_PALMS_VERTICAL_OFFSET: f64 = 370.0;
-
-                const SIDES_PALMS_AMOUNT: usize = 28;
-                const ONE_SIDE_PALMS_AMOUNT: usize = SIDES_PALMS_AMOUNT / 2;
-
-                const TILE_WIDTH: f64 = 250.0;
-                const TILE_HEIGHT: f64 = 150.0;
-
-                for index in 0..SIDES_PALMS_AMOUNT {
-
-                    let (
-                        index,
-                        horizontal_offset,
-                        vertical_offset
-                    ) = if index >= ONE_SIDE_PALMS_AMOUNT {
-
-                        (
-                            index - ONE_SIDE_PALMS_AMOUNT,
-                            BOTTOM_PALMS_HORIZONTAL_OFFSET,
-                            BOTTOM_PALMS_VERTICAL_OFFSET,
-                        )
-                    } else {
-                        (
-                            index,
-                            TOP_PALMS_HORIZONTAL_OFFSET,
-                            TOP_PALMS_VERTICAL_OFFSET,
-                        )
-                    };
-
-                    let horizontal_position = origin_horizontal_position +
-                        horizontal_offset +
-                        index as f64 * TILE_HORIZONTAL_DISTANCE * 2.0;
-
-                    if horizontal_position < -TILE_WIDTH ||
-                        horizontal_position > WINDOW_WIDTH {
-                        continue;
-                    }
-
-                    let vertical_position = origin_vertical_position +
-                        vertical_offset +
-                        index as f64 * TILE_VERTICAL_DISTANCE * 2.0;
-
-                    if vertical_position < -TILE_HEIGHT ||
-                        vertical_position > WINDOW_HEIGHT {
-                        continue;
-                    }
-
-                    image(
-                        &palm,
-                        context.transform.trans(
-                            horizontal_position,
-                            vertical_position,
-                        ),
-                        window,
-                    );
-                }
+                const PALM_TILE_INDEX: usize = 4;
+                display_sides_palms(
+                    window,
+                    &context.transform,
+                    &all_tiles[PALM_TILE_INDEX],
+                    origin_horizontal_position,
+                    origin_vertical_position,
+                );
 
                 let mut column: usize = 0;
                 let mut line: usize = 0;
@@ -305,22 +250,26 @@ fn main() {
                         line += 1;
                     }
 
+                    const TILE_HORIZONTAL_DISTANCE: f64 = 47.5;
                     let tile_horizontal_position = TILE_HORIZONTAL_OFFSET -
                         TILE_HORIZONTAL_DISTANCE * (column as f64) +
                         TILE_HORIZONTAL_DISTANCE * (line as f64) +
                         origin_horizontal_position;
 
+                    const TILE_WIDTH: f64 = 250.0;
                     if tile_horizontal_position < -TILE_WIDTH ||
                         tile_horizontal_position > WINDOW_WIDTH {
                         column += 1;
                         continue;
                     }
 
+                    const TILE_VERTICAL_DISTANCE: f64 = 34.0;
                     let tile_vertical_position = TILE_VERTICAL_OFFSET +
                         TILE_VERTICAL_DISTANCE * (column as f64) +
                         TILE_VERTICAL_DISTANCE * (line as f64) +
                         origin_vertical_position;
 
+                    const TILE_HEIGHT: f64 = 150.0;
                     if tile_vertical_position < -TILE_HEIGHT ||
                         tile_vertical_position > WINDOW_HEIGHT {
                         column += 1;
