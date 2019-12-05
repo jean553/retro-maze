@@ -80,8 +80,8 @@ pub fn display_selectable_tile(
     const GRAY_COLOR: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
     const SELECTABLE_TILE_COUNTER_FONT_SIZE: u32 = 16;
 
-    const FIRST_SELECTABLE_TILE_COUNTER_HORIZONTAL_POSITION: f64 = 100.0;
-    const FIRST_SELECTABLE_TILE_COUNTER_VERTICAL_POSITION: f64 = 590.0;
+    const COUNTER_HORIZONTAL_OFFSET: f64 = 160.0;
+    const COUNTER_VERTICAL_OFFSET: f64 = 100.0;
     text::Text::new_color(
         GRAY_COLOR,
         SELECTABLE_TILE_COUNTER_FONT_SIZE,
@@ -90,8 +90,8 @@ pub fn display_selectable_tile(
         font,
         &context.draw_state,
         context.transform.trans(
-            FIRST_SELECTABLE_TILE_COUNTER_HORIZONTAL_POSITION,
-            FIRST_SELECTABLE_TILE_COUNTER_VERTICAL_POSITION,
+            horizontal_position + COUNTER_HORIZONTAL_OFFSET,
+            vertical_position + COUNTER_VERTICAL_OFFSET,
         ),
         window,
     ).unwrap();

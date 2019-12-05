@@ -345,14 +345,15 @@ fn main() {
                     &context.transform,
                 );
 
+                const FIRST_SELECTABLE_TILE_AMOUNT: &str = "0";
                 const FIRST_SELECTABLE_TILE_HORIZONTAL_POSITION: f64 = -60.0;
-                const FIRST_SELECTABLE_TILE_VERTICAL_POSITION: f64 = 590.0;
+                const FIRST_SELECTABLE_TILE_VERTICAL_POSITION: f64 = 490.0;
                 display_selectable_tile(
                     window,
                     &context,
                     &mut selector_digits_font,
                     &all_tiles[3],
-                    "0",
+                    FIRST_SELECTABLE_TILE_AMOUNT,
                     FIRST_SELECTABLE_TILE_HORIZONTAL_POSITION,
                     FIRST_SELECTABLE_TILE_VERTICAL_POSITION,
                 );
