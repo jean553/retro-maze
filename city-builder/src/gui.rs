@@ -66,21 +66,30 @@ pub fn display_selector(
 /// `font` - the font to use to display the counter
 /// `tile` - the tile texture to display
 /// `amount` - the amount to display next to the tile
+/// `index` - the selectable tile index
 pub fn display_selectable_tile(
     window: &mut G2d,
     context: &Context,
     font: &mut Glyphs,
     tile: &G2dTexture,
     amount: &str,
-    horizontal_position: f64,
-    vertical_position: f64,
+    index: u8,
 ) {
+
+    const FIRST_HORIZONTAL_POSITION: f64 = -60.0;
+    const HORIZONTAL_DISTANCE: f64 = 120.0;
+    let horizontal_position =
+        FIRST_HORIZONTAL_POSITION +
+        index as f64 *
+        HORIZONTAL_DISTANCE;
+
+    const TILE_VERTICAL_POSITION: f64 = 490.0;
 
     image(
         tile,
         context.transform.trans(
             horizontal_position,
-            vertical_position,
+            TILE_VERTICAL_POSITION,
         ),
         window,
     );
@@ -90,6 +99,8 @@ pub fn display_selectable_tile(
 
     const COUNTER_HORIZONTAL_OFFSET: f64 = 160.0;
     const COUNTER_VERTICAL_OFFSET: f64 = 100.0;
+    const COUNTER_VERTICAL_POSITION: f64 = TILE_VERTICAL_POSITION + COUNTER_VERTICAL_OFFSET;
+
     text::Text::new_color(
         GRAY_COLOR,
         SELECTABLE_TILE_COUNTER_FONT_SIZE,
@@ -99,7 +110,7 @@ pub fn display_selectable_tile(
         &context.draw_state,
         context.transform.trans(
             horizontal_position + COUNTER_HORIZONTAL_OFFSET,
-            vertical_position + COUNTER_VERTICAL_OFFSET,
+            COUNTER_VERTICAL_POSITION,
         ),
         window,
     ).unwrap();

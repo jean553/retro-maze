@@ -346,30 +346,24 @@ fn main() {
 
                 const FIRST_SELECTABLE_TILE_AMOUNT: &str = "0";
                 const FIRST_SELECTABLE_TILE_INDEX: usize = 3;
-                const FIRST_SELECTABLE_TILE_HORIZONTAL_POSITION: f64 = -60.0;
-                const FIRST_SELECTABLE_TILE_VERTICAL_POSITION: f64 = 490.0;
                 display_selectable_tile(
                     window,
                     &context,
                     &mut selector_digits_font,
                     &all_tiles[FIRST_SELECTABLE_TILE_INDEX],
                     FIRST_SELECTABLE_TILE_AMOUNT,
-                    FIRST_SELECTABLE_TILE_HORIZONTAL_POSITION,
-                    FIRST_SELECTABLE_TILE_VERTICAL_POSITION,
+                    0,
                 );
 
                 const SECOND_SELECTABLE_TILE_AMOUNT: &str = "3";
                 const SECOND_SELECTABLE_TILE_INDEX: usize = 3;
-                const SECOND_SELECTABLE_TILE_HORIZONTAL_POSITION: f64 = 60.0;
-                const SECOND_SELECTABLE_TILE_VERTICAL_POSITION: f64 = 490.0;
                 display_selectable_tile(
                     window,
                     &context,
                     &mut selector_digits_font,
                     &all_tiles[SECOND_SELECTABLE_TILE_INDEX],
                     SECOND_SELECTABLE_TILE_AMOUNT,
-                    SECOND_SELECTABLE_TILE_HORIZONTAL_POSITION,
-                    SECOND_SELECTABLE_TILE_VERTICAL_POSITION,
+                    1,
                 );
 
                 selector_digits_font.factory
