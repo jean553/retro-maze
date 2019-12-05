@@ -18,7 +18,6 @@ use piston_window::{
     Glyphs,
     clear,
     image,
-    text,
 };
 
 use gui::{
@@ -346,49 +345,32 @@ fn main() {
                 );
 
                 const FIRST_SELECTABLE_TILE_AMOUNT: &str = "0";
+                const FIRST_SELECTABLE_TILE_INDEX: usize = 3;
                 const FIRST_SELECTABLE_TILE_HORIZONTAL_POSITION: f64 = -60.0;
                 const FIRST_SELECTABLE_TILE_VERTICAL_POSITION: f64 = 490.0;
                 display_selectable_tile(
                     window,
                     &context,
                     &mut selector_digits_font,
-                    &all_tiles[3],
+                    &all_tiles[FIRST_SELECTABLE_TILE_INDEX],
                     FIRST_SELECTABLE_TILE_AMOUNT,
                     FIRST_SELECTABLE_TILE_HORIZONTAL_POSITION,
                     FIRST_SELECTABLE_TILE_VERTICAL_POSITION,
                 );
 
-                const GRAY_COLOR: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
-                const SELECTABLE_TILE_COUNTER_FONT_SIZE: u32 = 16;
-
+                const SECOND_SELECTABLE_TILE_AMOUNT: &str = "3";
                 const SECOND_SELECTABLE_TILE_INDEX: usize = 3;
                 const SECOND_SELECTABLE_TILE_HORIZONTAL_POSITION: f64 = 60.0;
                 const SECOND_SELECTABLE_TILE_VERTICAL_POSITION: f64 = 490.0;
-                image(
-                    &all_tiles[SECOND_SELECTABLE_TILE_INDEX],
-                    context.transform.trans(
-                        SECOND_SELECTABLE_TILE_HORIZONTAL_POSITION,
-                        SECOND_SELECTABLE_TILE_VERTICAL_POSITION,
-                    ),
+                display_selectable_tile(
                     window,
-                );
-
-                const SECOND_SELECTABLE_TILE_COUNTER_VALUE: &str = "3";
-                const SECOND_SELECTABLE_TILE_COUNTER_HORIZONTAL_POSITION: f64 = 220.0;
-                const SECOND_SELECTABLE_TILE_COUNTER_VERTICAL_POSITION: f64 = 590.0;
-                text::Text::new_color(
-                    GRAY_COLOR,
-                    SELECTABLE_TILE_COUNTER_FONT_SIZE,
-                ).draw(
-                    SECOND_SELECTABLE_TILE_COUNTER_VALUE,
+                    &context,
                     &mut selector_digits_font,
-                    &context.draw_state,
-                    context.transform.trans(
-                        SECOND_SELECTABLE_TILE_COUNTER_HORIZONTAL_POSITION,
-                        SECOND_SELECTABLE_TILE_COUNTER_VERTICAL_POSITION,
-                    ),
-                    window,
-                ).unwrap();
+                    &all_tiles[SECOND_SELECTABLE_TILE_INDEX],
+                    SECOND_SELECTABLE_TILE_AMOUNT,
+                    SECOND_SELECTABLE_TILE_HORIZONTAL_POSITION,
+                    SECOND_SELECTABLE_TILE_VERTICAL_POSITION,
+                );
 
                 selector_digits_font.factory
                     .encoder
