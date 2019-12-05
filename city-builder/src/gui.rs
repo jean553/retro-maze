@@ -57,7 +57,15 @@ pub fn display_selector(
     );
 }
 
+/// Refactored code to displays selectable tile into the selectable tiles bar.
 ///
+/// # Args:
+///
+/// `window` - the window where the textures will be displayed
+/// `context` - the window context to use the appropriated transformations
+/// `font` - the font to use to display the counter
+/// `tile` - the tile texture to display
+/// `amount` - the amount to display next to the tile
 pub fn display_selectable_tile(
     window: &mut G2d,
     context: &Context,
