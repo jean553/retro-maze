@@ -24,6 +24,7 @@ use gui::{
     display_selector,
     display_selectable_tile,
     display_sides_palms,
+    display_sun,
 };
 
 /// Refactored code to load a texture from a given image file name. Looks for files into the images resources folder.
@@ -216,15 +217,12 @@ fn main() {
                     sun_vertical_position > -SUN_HEIGHT &&
                     sun_vertical_position < WINDOW_HEIGHT {
 
-                    image(
-                        &sun,
-                        context.transform.trans(
-                            SUN_RELATIVE_HORIZONTAL_POSITION +
-                            origin_horizontal_position,
-                            SUN_RELATIVE_VERTICAL_POSITION +
-                            origin_vertical_position,
-                        ),
+                    display_sun(
                         window,
+                        &context.transform,
+                        &sun,
+                        sun_horizontal_position,
+                        sun_vertical_position,
                     );
                 }
 

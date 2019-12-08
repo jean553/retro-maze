@@ -39,7 +39,7 @@ pub fn display_selector(
         *transform,
         window,
     );
-    
+
     const BLACK_COLOR: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
     const SELECTOR_HORIZONTAL_POSITION: f64 = 0.0;
     const SELECTOR_VERTICAL_POSITION: f64 = 501.0;
@@ -128,7 +128,7 @@ pub fn display_selectable_tile(
 pub fn display_sides_palms(
     window: &mut G2d,
     transform: &[[f64; 3]; 2],
-    palm_sprite: &G2dTexture, 
+    palm_sprite: &G2dTexture,
     origin_horizontal_position: f64,
     origin_vertical_position: f64,
 ) {
@@ -197,4 +197,31 @@ pub fn display_sides_palms(
             window,
         );
     }
+}
+
+/// Displays the sun image. Only called once but refactored for readability.
+///
+/// # Args:
+///
+/// `window` - the window where the selector is displayed
+/// `transform` - transformation to apply on the selector when drawing
+/// `sun_sprite` - the already loaded sprite to use for the sun
+/// `origin_horizontal_position` - the origin horizontal position
+/// `origin_vertical_position` - the origin vertical position
+pub fn display_sun(
+    window: &mut G2d,
+    transform: &[[f64; 3]; 2],
+    sun_sprite: &G2dTexture,
+    sun_horizontal_position: f64,
+    sun_vertical_position: f64,
+) {
+
+     image(
+         sun_sprite,
+         transform.trans(
+             sun_horizontal_position,
+             sun_vertical_position,
+         ),
+         window,
+     );
 }
