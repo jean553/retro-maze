@@ -10,14 +10,12 @@ use piston_window::{
     Texture,
     G2dTexture,
     TextureSettings,
-    Transformed,
     Flip,
     Button,
     Key,
     PressEvent,
     Glyphs,
     clear,
-    image,
 };
 
 use gui::{
@@ -25,6 +23,7 @@ use gui::{
     display_selectable_tile,
     display_sides_palms,
     display_sun,
+    display_tiles,
 };
 
 /// Refactored code to load a texture from a given image file name. Looks for files into the images resources folder.
@@ -92,9 +91,6 @@ fn main() {
         window.create_texture_context(),
         TextureSettings::new(),
     ).unwrap();
-
-    const TILE_HORIZONTAL_OFFSET: f64 = -75.0;
-    const TILE_VERTICAL_OFFSET: f64 = -25.0;
 
     let mut origin_horizontal_position: f64 = 0.0;
     let mut origin_vertical_position: f64 = 0.0;
@@ -235,56 +231,14 @@ fn main() {
                     origin_vertical_position,
                 );
 
-                let mut column: usize = 0;
-                let mut line: usize = 0;
-
-                for (index, tile) in tiles.iter().enumerate() {
-
-                    const TILES_PER_LINE: usize = 11;
-
-                    if index != 0 &&
-                        index % TILES_PER_LINE == 0 {
-                        column = 0;
-                        line += 1;
-                    }
-
-                    const TILE_HORIZONTAL_DISTANCE: f64 = 47.5;
-                    let tile_horizontal_position = TILE_HORIZONTAL_OFFSET -
-                        TILE_HORIZONTAL_DISTANCE * (column as f64) +
-                        TILE_HORIZONTAL_DISTANCE * (line as f64) +
-                        origin_horizontal_position;
-
-                    const TILE_WIDTH: f64 = 250.0;
-                    if tile_horizontal_position < -TILE_WIDTH ||
-                        tile_horizontal_position > WINDOW_WIDTH {
-                        column += 1;
-                        continue;
-                    }
-
-                    const TILE_VERTICAL_DISTANCE: f64 = 34.0;
-                    let tile_vertical_position = TILE_VERTICAL_OFFSET +
-                        TILE_VERTICAL_DISTANCE * (column as f64) +
-                        TILE_VERTICAL_DISTANCE * (line as f64) +
-                        origin_vertical_position;
-
-                    const TILE_HEIGHT: f64 = 150.0;
-                    if tile_vertical_position < -TILE_HEIGHT ||
-                        tile_vertical_position > WINDOW_HEIGHT {
-                        column += 1;
-                        continue;
-                    }
-
-                    image(
-                        &all_tiles[*tile],
-                        context.transform.trans(
-                            tile_horizontal_position,
-                            tile_vertical_position
-                        ),
-                        window,
-                    );
-
-                    column += 1;
-                }
+                display_tiles(
+                    window,
+                    &context.transform,
+                    &all_tiles,
+                    &tiles,
+                    origin_horizontal_position,
+                    origin_vertical_position,
+                );
 
                 display_selector(
                     window,
