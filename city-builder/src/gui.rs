@@ -239,7 +239,7 @@ pub fn display_sun(
 pub fn display_tiles(
     window: &mut G2d,
     transform: &[[f64; 3]; 2],
-    all_sprites: &[G2dTexture; 11],
+    all_sprites: &[G2dTexture],
     tiles: &[usize; 330],
     origin_horizontal_position: f64,
     origin_vertical_position: f64,

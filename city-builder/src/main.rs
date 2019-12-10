@@ -82,7 +82,6 @@ fn main() {
         load_texture_from_file(&mut window, "departure_2.png"),
         load_texture_from_file(&mut window, "departure_3.png"),
         load_texture_from_file(&mut window, "departure_4.png"),
-        load_texture_from_file(&mut window, "selected_ground.png"),
     ];
 
     const SELECTOR_DIGITS_FONT_FILE_PATH: &str = "res/fonts/fast_money.ttf";
@@ -112,9 +111,6 @@ fn main() {
     const LAST_DEPARTURE_SPRITE_INDEX: usize = 9;
     tiles[DEPARTURE_TILE_INDEX] = FIRST_DEPARTURE_SPRITE_INDEX;
 
-    const FIRST_SELECTED_SPRITE_INDEX: usize = 0;
-    const SECOND_SELECTED_SPRITE_INDEX: usize = 10;
-
     let mut event_previous_time = time::Instant::now();
     let mut animations_previous_time = time::Instant::now();
 
@@ -137,12 +133,6 @@ fn main() {
                 FIRST_DEPARTURE_SPRITE_INDEX
             } else {
                 tiles[DEPARTURE_TILE_INDEX] + 1
-            };
-
-            tiles[selected_tile_index] = if tiles[selected_tile_index] == SECOND_SELECTED_SPRITE_INDEX {
-                FIRST_SELECTED_SPRITE_INDEX
-            } else {
-                SECOND_SELECTED_SPRITE_INDEX
             };
 
             animations_previous_time = time::Instant::now();
