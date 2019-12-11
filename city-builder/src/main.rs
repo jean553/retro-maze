@@ -82,6 +82,7 @@ fn main() {
         load_texture_from_file(&mut window, "departure_2.png"),
         load_texture_from_file(&mut window, "departure_3.png"),
         load_texture_from_file(&mut window, "departure_4.png"),
+        load_texture_from_file(&mut window, "turn.png"),
     ];
 
     const SELECTOR_DIGITS_FONT_FILE_PATH: &str = "res/fonts/fast_money.ttf";
@@ -110,6 +111,10 @@ fn main() {
     const FIRST_DEPARTURE_SPRITE_INDEX: usize = 5;
     const LAST_DEPARTURE_SPRITE_INDEX: usize = 9;
     tiles[DEPARTURE_TILE_INDEX] = FIRST_DEPARTURE_SPRITE_INDEX;
+
+    const TURN_TILE_INDEX: usize = 39;
+    const TURN_SPRITE_INDEX: usize = 10;
+    tiles[TURN_TILE_INDEX] = TURN_SPRITE_INDEX;
 
     let mut event_previous_time = time::Instant::now();
     let mut animations_previous_time = time::Instant::now();
