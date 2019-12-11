@@ -4,11 +4,8 @@ use piston_window::{
     G2d,
     G2dTexture,
     Transformed,
-    Context,
-    Glyphs,
     rectangle,
     image,
-    text,
 };
 
 /// Displays the static selector separator and background at the bottom of the window. Only called once but refactored for readability.
@@ -55,65 +52,6 @@ pub fn display_selector(
         *transform,
         window,
     );
-}
-
-/// Displays selectable tile into the selectable tiles bar.
-///
-/// # Args:
-///
-/// `window` - the window where the textures will be displayed
-/// `context` - the window context to use the appropriated transformations
-/// `font` - the font to use to display the counter
-/// `tile` - the tile texture to display
-/// `amount` - the amount to display next to the tile
-/// `index` - the selectable tile index
-pub fn display_selectable_tile(
-    window: &mut G2d,
-    context: &Context,
-    font: &mut Glyphs,
-    tile: &G2dTexture,
-    amount: &str,
-    index: u8,
-) {
-
-    const FIRST_HORIZONTAL_POSITION: f64 = -60.0;
-    const HORIZONTAL_DISTANCE: f64 = 120.0;
-    let horizontal_position =
-        FIRST_HORIZONTAL_POSITION +
-        index as f64 *
-        HORIZONTAL_DISTANCE;
-
-    const TILE_VERTICAL_POSITION: f64 = 490.0;
-
-    image(
-        tile,
-        context.transform.trans(
-            horizontal_position,
-            TILE_VERTICAL_POSITION,
-        ),
-        window,
-    );
-
-    const GRAY_COLOR: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
-    const SELECTABLE_TILE_COUNTER_FONT_SIZE: u32 = 16;
-
-    const COUNTER_HORIZONTAL_OFFSET: f64 = 160.0;
-    const COUNTER_VERTICAL_OFFSET: f64 = 100.0;
-    const COUNTER_VERTICAL_POSITION: f64 = TILE_VERTICAL_POSITION + COUNTER_VERTICAL_OFFSET;
-
-    text::Text::new_color(
-        GRAY_COLOR,
-        SELECTABLE_TILE_COUNTER_FONT_SIZE,
-    ).draw(
-        amount,
-        font,
-        &context.draw_state,
-        context.transform.trans(
-            horizontal_position + COUNTER_HORIZONTAL_OFFSET,
-            COUNTER_VERTICAL_POSITION,
-        ),
-        window,
-    ).unwrap();
 }
 
 /// Refactored function to display the palms.
