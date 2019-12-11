@@ -96,13 +96,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "city-builder"
-version = "0.1.0"
-dependencies = [
- "piston_window 0.105.0 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
 name = "cloudabi"
 version = "0.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -893,6 +886,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "redox_syscall"
 version = "0.1.56"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "retro-maze"
+version = "0.1.0"
+dependencies = [
+ "piston_window 0.105.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "rustc-demangle"
