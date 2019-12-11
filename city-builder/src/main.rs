@@ -156,9 +156,6 @@ fn main() {
     let mut event_previous_time = time::Instant::now();
     let mut animations_previous_time = time::Instant::now();
 
-    const DEFAULT_SELECTED_TILE_INDEX: usize = 27;
-    let mut selected_tile_index: usize = DEFAULT_SELECTED_TILE_INDEX;
-
     while let Some(event) = window.next() {
 
         const ANIMATION_INTERVAL: u128 = 100;
@@ -212,14 +209,6 @@ fn main() {
                 origin_horizontal_position -= CAMERA_MOVEMENT_OFFSET;
                 event_previous_time = time::Instant::now();
             }
-        }
-        else if let Some(Button::Keyboard(Key::Return)) = pressed_key {
-
-            /* TODO: simply "visually" adds one road for now,
-               but it should also update the selected tile
-               in order to ensure future iterations */
-            tiles[selected_tile_index] = 3;
-            selected_tile_index -= 11;
         }
 
         window.draw_2d(
