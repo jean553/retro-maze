@@ -20,7 +20,6 @@ use piston_window::{
 
 use gui::{
     display_selector,
-    display_selectable_tile,
     display_sides_palms,
     display_sun,
     display_tiles,
@@ -72,11 +71,12 @@ fn main() {
     let sun = load_texture_from_file(&mut window, "sun.png");
 
     let all_tiles = [
+        load_texture_from_file(&mut window, "palm.png"),
         load_texture_from_file(&mut window, "default.png"),
         load_texture_from_file(&mut window, "arrival_0.png"),
         load_texture_from_file(&mut window, "arrival_1.png"),
-        load_texture_from_file(&mut window, "road.png"),
-        load_texture_from_file(&mut window, "palm.png"),
+        load_texture_from_file(&mut window, "road_0.png"),
+        load_texture_from_file(&mut window, "road_1.png"),
         load_texture_from_file(&mut window, "departure_0.png"),
         load_texture_from_file(&mut window, "departure_1.png"),
         load_texture_from_file(&mut window, "departure_2.png"),
@@ -103,7 +103,7 @@ fn main() {
     let mut origin_vertical_position: f64 = 0.0;
 
     const TILES_AMOUNT: usize = 330;
-    const DEFAULT_SPRITE_INDEX: usize = 0;
+    const DEFAULT_SPRITE_INDEX: usize = 1;
     let mut tiles: [usize; TILES_AMOUNT] = [
         DEFAULT_SPRITE_INDEX;
         TILES_AMOUNT
@@ -112,45 +112,45 @@ fn main() {
     /* TODO: set some tiles for now, should be set per level */
 
     const ARRIVAL_TILE_INDEX: usize = 5;
-    const FIRST_ARRIVAL_SPRITE_INDEX: usize = 1;
-    const SECOND_ARRIVAL_SPRITE_INDEX: usize = 2;
+    const FIRST_ARRIVAL_SPRITE_INDEX: usize = 2;
+    const SECOND_ARRIVAL_SPRITE_INDEX: usize = 3;
     tiles[ARRIVAL_TILE_INDEX] = FIRST_ARRIVAL_SPRITE_INDEX;
 
-    const DEPARTURE_TILE_INDEX: usize = 38;
-    const FIRST_DEPARTURE_SPRITE_INDEX: usize = 5;
-    const LAST_DEPARTURE_SPRITE_INDEX: usize = 9;
+    const DEPARTURE_TILE_INDEX: usize = 82;
+    const FIRST_DEPARTURE_SPRITE_INDEX: usize = 6;
+    const LAST_DEPARTURE_SPRITE_INDEX: usize = 10;
     tiles[DEPARTURE_TILE_INDEX] = FIRST_DEPARTURE_SPRITE_INDEX;
 
     const FIRST_TURN_TILE_INDEX: usize = 39;
-    const FIRST_TURN_SPRITE_INDEX: usize = 10;
+    const FIRST_TURN_SPRITE_INDEX: usize = 11;
     tiles[FIRST_TURN_TILE_INDEX] = FIRST_TURN_SPRITE_INDEX;
 
     const SECOND_TURN_TILE_INDEX: usize = 40;
-    const SECOND_TURN_SPRITE_INDEX: usize = 11;
+    const SECOND_TURN_SPRITE_INDEX: usize = 12;
     tiles[SECOND_TURN_TILE_INDEX] = SECOND_TURN_SPRITE_INDEX;
 
     const THIRD_TURN_TILE_INDEX: usize = 41;
-    const THIRD_TURN_SPRITE_INDEX: usize = 12;
+    const THIRD_TURN_SPRITE_INDEX: usize = 13;
     tiles[THIRD_TURN_TILE_INDEX] = THIRD_TURN_SPRITE_INDEX;
 
     const FOURTH_TURN_TILE_INDEX: usize = 42;
-    const FOURTH_TURN_SPRITE_INDEX: usize = 13;
+    const FOURTH_TURN_SPRITE_INDEX: usize = 14;
     tiles[FOURTH_TURN_TILE_INDEX] = FOURTH_TURN_SPRITE_INDEX;
 
     const FIRST_INTERSECTION_TILE_INDEX: usize = 43;
-    const FIRST_INTERSECTION_SPRITE_INDEX: usize = 14;
+    const FIRST_INTERSECTION_SPRITE_INDEX: usize = 15;
     tiles[FIRST_INTERSECTION_TILE_INDEX] = FIRST_INTERSECTION_SPRITE_INDEX;
 
     const SECOND_INTERSECTION_TILE_INDEX: usize = 44;
-    const SECOND_INTERSECTION_SPRITE_INDEX: usize = 15;
+    const SECOND_INTERSECTION_SPRITE_INDEX: usize = 16;
     tiles[SECOND_INTERSECTION_TILE_INDEX] = SECOND_INTERSECTION_SPRITE_INDEX;
 
     const THIRD_INTERSECTION_TILE_INDEX: usize = 45;
-    const THIRD_INTERSECTION_SPRITE_INDEX: usize = 16;
+    const THIRD_INTERSECTION_SPRITE_INDEX: usize = 17;
     tiles[THIRD_INTERSECTION_TILE_INDEX] = THIRD_INTERSECTION_SPRITE_INDEX;
 
     const FOURTH_INTERSECTION_TILE_INDEX: usize = 46;
-    const FOURTH_INTERSECTION_SPRITE_INDEX: usize = 17;
+    const FOURTH_INTERSECTION_SPRITE_INDEX: usize = 18;
     tiles[FOURTH_INTERSECTION_TILE_INDEX] = FOURTH_INTERSECTION_SPRITE_INDEX;
 
     let mut event_previous_time = time::Instant::now();
@@ -243,7 +243,7 @@ fn main() {
                     );
                 }
 
-                const PALM_TILE_INDEX: usize = 4;
+                const PALM_TILE_INDEX: usize = 0;
                 display_sides_palms(
                     window,
                     &context.transform,
@@ -264,28 +264,6 @@ fn main() {
                 display_selector(
                     window,
                     &context.transform,
-                );
-
-                const FIRST_SELECTABLE_TILE_AMOUNT: &str = "0";
-                const FIRST_SELECTABLE_TILE_INDEX: usize = 3;
-                display_selectable_tile(
-                    window,
-                    &context,
-                    &mut selector_digits_font,
-                    &all_tiles[FIRST_SELECTABLE_TILE_INDEX],
-                    FIRST_SELECTABLE_TILE_AMOUNT,
-                    0,
-                );
-
-                const SECOND_SELECTABLE_TILE_AMOUNT: &str = "3";
-                const SECOND_SELECTABLE_TILE_INDEX: usize = 3;
-                display_selectable_tile(
-                    window,
-                    &context,
-                    &mut selector_digits_font,
-                    &all_tiles[SECOND_SELECTABLE_TILE_INDEX],
-                    SECOND_SELECTABLE_TILE_AMOUNT,
-                    1,
                 );
 
                 selector_digits_font.factory
