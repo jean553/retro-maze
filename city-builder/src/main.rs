@@ -86,6 +86,10 @@ fn main() {
         load_texture_from_file(&mut window, "turn_1.png"),
         load_texture_from_file(&mut window, "turn_2.png"),
         load_texture_from_file(&mut window, "turn_3.png"),
+        load_texture_from_file(&mut window, "intersection_0.png"),
+        load_texture_from_file(&mut window, "intersection_1.png"),
+        load_texture_from_file(&mut window, "intersection_2.png"),
+        load_texture_from_file(&mut window, "intersection_3.png"),
     ];
 
     const SELECTOR_DIGITS_FONT_FILE_PATH: &str = "res/fonts/fast_money.ttf";
@@ -104,6 +108,8 @@ fn main() {
         DEFAULT_SPRITE_INDEX;
         TILES_AMOUNT
     ];
+
+    /* TODO: set some tiles for now, should be set per level */
 
     const ARRIVAL_TILE_INDEX: usize = 5;
     const FIRST_ARRIVAL_SPRITE_INDEX: usize = 1;
@@ -130,6 +136,22 @@ fn main() {
     const FOURTH_TURN_TILE_INDEX: usize = 42;
     const FOURTH_TURN_SPRITE_INDEX: usize = 13;
     tiles[FOURTH_TURN_TILE_INDEX] = FOURTH_TURN_SPRITE_INDEX;
+
+    const FIRST_INTERSECTION_TILE_INDEX: usize = 43;
+    const FIRST_INTERSECTION_SPRITE_INDEX: usize = 14;
+    tiles[FIRST_INTERSECTION_TILE_INDEX] = FIRST_INTERSECTION_SPRITE_INDEX;
+
+    const SECOND_INTERSECTION_TILE_INDEX: usize = 44;
+    const SECOND_INTERSECTION_SPRITE_INDEX: usize = 15;
+    tiles[SECOND_INTERSECTION_TILE_INDEX] = SECOND_INTERSECTION_SPRITE_INDEX;
+
+    const THIRD_INTERSECTION_TILE_INDEX: usize = 45;
+    const THIRD_INTERSECTION_SPRITE_INDEX: usize = 16;
+    tiles[THIRD_INTERSECTION_TILE_INDEX] = THIRD_INTERSECTION_SPRITE_INDEX;
+
+    const FOURTH_INTERSECTION_TILE_INDEX: usize = 46;
+    const FOURTH_INTERSECTION_SPRITE_INDEX: usize = 17;
+    tiles[FOURTH_INTERSECTION_TILE_INDEX] = FOURTH_INTERSECTION_SPRITE_INDEX;
 
     let mut event_previous_time = time::Instant::now();
     let mut animations_previous_time = time::Instant::now();
