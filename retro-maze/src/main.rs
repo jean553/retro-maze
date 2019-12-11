@@ -121,37 +121,52 @@ fn main() {
     const LAST_DEPARTURE_SPRITE_INDEX: usize = 10;
     tiles[DEPARTURE_TILE_INDEX] = FIRST_DEPARTURE_SPRITE_INDEX;
 
-    const FIRST_TURN_TILE_INDEX: usize = 39;
-    const FIRST_TURN_SPRITE_INDEX: usize = 11;
-    tiles[FIRST_TURN_TILE_INDEX] = FIRST_TURN_SPRITE_INDEX;
+    tiles[71] = 5;
+    tiles[60] = 5;
+    tiles[49] = 14;
+    tiles[50] = 4;
+    tiles[51] = 16;
 
-    const SECOND_TURN_TILE_INDEX: usize = 40;
-    const SECOND_TURN_SPRITE_INDEX: usize = 12;
-    tiles[SECOND_TURN_TILE_INDEX] = SECOND_TURN_SPRITE_INDEX;
+    tiles[62] = 13;
+    tiles[63] = 4;
+    tiles[64] = 12;
+    tiles[53] = 5;
+    tiles[42] = 5;
+    tiles[31] = 5;
+    tiles[20] = 11;
+    tiles[19] = 4;
+    tiles[18] = 18;
+    tiles[17] = 4;
 
-    const THIRD_TURN_TILE_INDEX: usize = 41;
-    const THIRD_TURN_SPRITE_INDEX: usize = 13;
-    tiles[THIRD_TURN_TILE_INDEX] = THIRD_TURN_SPRITE_INDEX;
+    tiles[40] = 5;
+    tiles[29] = 5;
 
-    const FOURTH_TURN_TILE_INDEX: usize = 42;
-    const FOURTH_TURN_SPRITE_INDEX: usize = 14;
-    tiles[FOURTH_TURN_TILE_INDEX] = FOURTH_TURN_SPRITE_INDEX;
+    tiles[16] = 17;
+    tiles[27] = 12;
+    tiles[26] = 4;
+    tiles[25] = 17;
 
-    const FIRST_INTERSECTION_TILE_INDEX: usize = 43;
-    const FIRST_INTERSECTION_SPRITE_INDEX: usize = 15;
-    tiles[FIRST_INTERSECTION_TILE_INDEX] = FIRST_INTERSECTION_SPRITE_INDEX;
+    tiles[14] = 11;
+    tiles[13] = 4;
+    tiles[12] = 14;
+    tiles[23] = 5;
+    tiles[34] = 5;
+    tiles[45] = 5;
+    tiles[56] = 5;
+    tiles[67] = 13;
+    tiles[68] = 4;
+    tiles[69] = 12;
+    tiles[58] = 5;
+    tiles[47] = 5;
+    tiles[36] = 5;
 
-    const SECOND_INTERSECTION_TILE_INDEX: usize = 44;
-    const SECOND_INTERSECTION_SPRITE_INDEX: usize = 16;
-    tiles[SECOND_INTERSECTION_TILE_INDEX] = SECOND_INTERSECTION_SPRITE_INDEX;
-
-    const THIRD_INTERSECTION_TILE_INDEX: usize = 45;
-    const THIRD_INTERSECTION_SPRITE_INDEX: usize = 17;
-    tiles[THIRD_INTERSECTION_TILE_INDEX] = THIRD_INTERSECTION_SPRITE_INDEX;
-
-    const FOURTH_INTERSECTION_TILE_INDEX: usize = 46;
-    const FOURTH_INTERSECTION_SPRITE_INDEX: usize = 18;
-    tiles[FOURTH_INTERSECTION_TILE_INDEX] = FOURTH_INTERSECTION_SPRITE_INDEX;
+    tiles[61] = 0;
+    tiles[57] = 0;
+    tiles[15] = 0;
+    tiles[70] = 0;
+    tiles[28] = 0;
+    tiles[39] = 0;
+    tiles[52] = 0;
 
     let mut event_previous_time = time::Instant::now();
     let mut animations_previous_time = time::Instant::now();

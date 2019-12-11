@@ -1,5 +1,5 @@
 [package]
-name = "city-builder"
+name = "retro-maze"
 version = "0.1.0"
 authors = ["vagrant"]
 edition = "2018"
