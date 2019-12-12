@@ -16,6 +16,8 @@ use piston_window::{
     PressEvent,
     Glyphs,
     clear,
+    image,
+    Transformed,
 };
 
 use gui::{
@@ -69,6 +71,11 @@ fn main() {
         .unwrap();
 
     let sun = load_texture_from_file(&mut window, "sun.png");
+
+    let car_forward_texture = load_texture_from_file(&mut window, "delorean_0.png");
+    let car_left_texture = load_texture_from_file(&mut window, "delorean_1.png");
+    let car_backward_texture = load_texture_from_file(&mut window, "delorean_2.png");
+    let car_right_texture = load_texture_from_file(&mut window, "delorean_3.png");
 
     let all_tiles = [
         load_texture_from_file(&mut window, "palm.png"),
@@ -274,6 +281,20 @@ fn main() {
                     &tiles,
                     origin_horizontal_position,
                     origin_vertical_position,
+                );
+
+                /* TODO: display a fixed position car for now,
+                   the car should be able to move on the map */
+
+                const CAR_HORIZONTAL_POSITION: f64 = 20.0;
+                const CAR_VERTICAL_POSITION: f64 = 380.0;
+                image(
+                    &car_forward_texture,
+                    context.transform.trans(
+                        CAR_HORIZONTAL_POSITION + origin_horizontal_position,
+                        CAR_VERTICAL_POSITION + origin_vertical_position,
+                    ),
+                    window,
                 );
 
                 display_selector(
