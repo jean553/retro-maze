@@ -178,6 +178,11 @@ fn main() {
     let mut event_previous_time = time::Instant::now();
     let mut animations_previous_time = time::Instant::now();
 
+    const CAR_DEFAULT_HORIZONTAL_POSITION: f64 = 20.0;
+    const CAR_DEFAULT_VERTICAL_POSITION: f64 = 380.0;
+    let mut car_horizontal_position: f64 = CAR_DEFAULT_HORIZONTAL_POSITION;
+    let mut car_vertical_position: f64 = CAR_DEFAULT_VERTICAL_POSITION;
+
     while let Some(event) = window.next() {
 
         const ANIMATION_INTERVAL: u128 = 100;
@@ -195,6 +200,14 @@ fn main() {
             } else {
                 tiles[DEPARTURE_TILE_INDEX] + 1
             };
+
+            /* FIXME: only moves the car into one direction for now,
+               it should handle all the directions */
+
+            const CAR_HORIZONTAL_MOVEMENT_OFFSET: f64 = 3.5;
+            const CAR_VERTICAL_MOVEMENT_OFFSET: f64 = 2.5;
+            car_horizontal_position -= CAR_HORIZONTAL_MOVEMENT_OFFSET;
+            car_vertical_position -= CAR_VERTICAL_MOVEMENT_OFFSET;
 
             animations_previous_time = time::Instant::now();
         }
@@ -283,16 +296,11 @@ fn main() {
                     origin_vertical_position,
                 );
 
-                /* TODO: display a fixed position car for now,
-                   the car should be able to move on the map */
-
-                const CAR_HORIZONTAL_POSITION: f64 = 20.0;
-                const CAR_VERTICAL_POSITION: f64 = 380.0;
                 image(
                     &car_forward_texture,
                     context.transform.trans(
-                        CAR_HORIZONTAL_POSITION + origin_horizontal_position,
-                        CAR_VERTICAL_POSITION + origin_vertical_position,
+                        car_horizontal_position + origin_horizontal_position,
+                        car_vertical_position + origin_vertical_position,
                     ),
                     window,
                 );
