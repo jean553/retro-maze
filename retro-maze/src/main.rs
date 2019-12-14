@@ -27,6 +27,11 @@ use gui::{
     display_tiles,
 };
 
+enum CarDirection {
+    Forward,
+    Backward,
+}
+
 /// Refactored code to load a texture from a given image file name. Looks for files into the images resources folder.
 ///
 /// # Args:
@@ -183,6 +188,9 @@ fn main() {
     let mut car_horizontal_position: f64 = CAR_DEFAULT_HORIZONTAL_POSITION;
     let mut car_vertical_position: f64 = CAR_DEFAULT_VERTICAL_POSITION;
 
+    /* FIXME: manually sets the direction for now, should depend of the road disposition */
+    let mut car_direction: CarDirection = CarDirection::Backward;
+
     while let Some(event) = window.next() {
 
         const ANIMATION_INTERVAL: u128 = 100;
@@ -204,10 +212,21 @@ fn main() {
             /* FIXME: only moves the car into one direction for now,
                it should handle all the directions */
 
-            const CAR_HORIZONTAL_MOVEMENT_OFFSET: f64 = 3.5;
-            const CAR_VERTICAL_MOVEMENT_OFFSET: f64 = 2.5;
-            car_horizontal_position -= CAR_HORIZONTAL_MOVEMENT_OFFSET;
-            car_vertical_position -= CAR_VERTICAL_MOVEMENT_OFFSET;
+            let (car_horizontal_movement, car_vertical_movement) = match car_direction {
+                CarDirection::Forward => {
+                    const CAR_FORWARD_HORIZONTAL_MOVEMENT: f64 = -3.5;
+                    const CAR_FORWARD_VERTICAL_MOVEMENT: f64 = -2.5;
+                    (CAR_FORWARD_HORIZONTAL_MOVEMENT, CAR_FORWARD_VERTICAL_MOVEMENT)
+                },
+                CarDirection::Backward => {
+                    const CAR_BACKWARD_HORIZONTAL_MOVEMENT: f64 = 3.5;
+                    const CAR_BACKWARD_VERTICAL_MOVEMENT: f64 = 2.5;
+                    (CAR_BACKWARD_HORIZONTAL_MOVEMENT, CAR_BACKWARD_VERTICAL_MOVEMENT)
+                }
+            };
+
+            car_horizontal_position += car_horizontal_movement;
+            car_vertical_position += car_vertical_movement;
 
             animations_previous_time = time::Instant::now();
         }
@@ -296,8 +315,17 @@ fn main() {
                     origin_vertical_position,
                 );
 
+                let car_texture: &G2dTexture = match car_direction {
+                    CarDirection::Forward => {
+                        &car_forward_texture
+                    },
+                    CarDirection::Backward => {
+                        &car_backward_texture
+                    }
+                };
+
                 image(
-                    &car_forward_texture,
+                    car_texture,
                     context.transform.trans(
                         car_horizontal_position + origin_horizontal_position,
                         car_vertical_position + origin_vertical_position,
