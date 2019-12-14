@@ -30,6 +30,8 @@ use gui::{
 enum CarDirection {
     Forward,
     Backward,
+    Left,
+    Right,
 }
 
 /// Refactored code to load a texture from a given image file name. Looks for files into the images resources folder.
@@ -189,7 +191,7 @@ fn main() {
     let mut car_vertical_position: f64 = CAR_DEFAULT_VERTICAL_POSITION;
 
     /* FIXME: manually sets the direction for now, should depend of the road disposition */
-    let mut car_direction: CarDirection = CarDirection::Backward;
+    let mut car_direction: CarDirection = CarDirection::Right;
 
     while let Some(event) = window.next() {
 
@@ -209,9 +211,6 @@ fn main() {
                 tiles[DEPARTURE_TILE_INDEX] + 1
             };
 
-            /* FIXME: only moves the car into one direction for now,
-               it should handle all the directions */
-
             let (car_horizontal_movement, car_vertical_movement) = match car_direction {
                 CarDirection::Forward => {
                     const CAR_FORWARD_HORIZONTAL_MOVEMENT: f64 = -3.5;
@@ -222,6 +221,16 @@ fn main() {
                     const CAR_BACKWARD_HORIZONTAL_MOVEMENT: f64 = 3.5;
                     const CAR_BACKWARD_VERTICAL_MOVEMENT: f64 = 2.5;
                     (CAR_BACKWARD_HORIZONTAL_MOVEMENT, CAR_BACKWARD_VERTICAL_MOVEMENT)
+                },
+                CarDirection::Left => {
+                    const CAR_LEFT_HORIZONTAL_MOVEMENT: f64 = -3.5;
+                    const CAR_LEFT_VERTICAL_MOVEMENT: f64 = 2.5;
+                    (CAR_LEFT_HORIZONTAL_MOVEMENT, CAR_LEFT_VERTICAL_MOVEMENT)
+                },
+                CarDirection::Right => {
+                    const CAR_RIGHT_HORIZONTAL_MOVEMENT: f64 = 3.5;
+                    const CAR_RIGHT_VERTICAL_MOVEMENT: f64 = -2.5;
+                    (CAR_RIGHT_HORIZONTAL_MOVEMENT, CAR_RIGHT_VERTICAL_MOVEMENT)
                 }
             };
 
@@ -316,12 +325,10 @@ fn main() {
                 );
 
                 let car_texture: &G2dTexture = match car_direction {
-                    CarDirection::Forward => {
-                        &car_forward_texture
-                    },
-                    CarDirection::Backward => {
-                        &car_backward_texture
-                    }
+                    CarDirection::Forward => &car_forward_texture,
+                    CarDirection::Backward => &car_backward_texture,
+                    CarDirection::Left => &car_left_texture,
+                    CarDirection::Right => &car_right_texture,
                 };
 
                 image(
